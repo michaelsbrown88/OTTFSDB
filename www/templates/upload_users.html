@@ -1,0 +1,46 @@
+<ion-view view-title="Upload Draft Users" class="upload-users-view" ng-controller="UploadUsersCtrl">
+  <ion-content>
+
+    <ion-refresher
+      pulling-text="Pull to refresh..."
+      on-refresh="doRefresh()">
+    </ion-refresher>
+
+    <div class="card">
+      <div class="item item-text-wrap" ng-show="users.length > 0">
+        <h2>
+          {{userslength}} users are ready to upload.
+        </h2>
+        Please choose an action for each user in the list below.
+      </div>
+
+      <div class="item item-text-wrap" ng-show="users.length == 0">
+        <h2>
+          No Draft Users at this time.
+        </h2>
+        You can use Offline Mode to create some.
+      </div>
+
+    </div>
+
+    <ion-list>
+      <ion-item class="item-button-right" ng-repeat="user in $parent.filteredUsers = (users | filter: myFilter)">
+        <!--<ion-item class="item-button-right" ng-repeat="user in $parent.filteredUsers = (users | filter: {status:3})">-->
+        <i class="icon ion-user"></i>
+        {{user.fullname}}
+        <p>{{user.username}}</p>
+        <p class="text-assertive" ng-show="user.exists == 1">UPDATE existing user {{user.fullname}} ({{user.matchingUser.country}})<br>Usernames match: {{user.username}}</p>
+        <p ng-show="user.status == 1">NEW USER</p>
+        <p ng-show="user.status == 2">Edit USER</p>
+        <p ng-show="user.status == 3">Delete USER</p>
+        <button class="button" ng-class="{'button-assertive': user.exists, 'button-positive': !user.exists}" ng-click="uploadActions(user)">
+          <i class="icon ion-ios-gear"></i>
+        </button>
+
+      </ion-item>
+    </ion-list>
+
+
+  </ion-content>
+
+</ion-view>

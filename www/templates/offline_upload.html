@@ -1,0 +1,74 @@
+<ion-view view-title="Draft Users [OFFLINE]" class="offline-users-view" ng-controller="OfflineUsersCtrl">
+  <ion-nav-buttons side="secondary">
+    <button ng-click="newUser()" class="button">
+      <i class="icon ion-android-add-circle"></i> New User
+    </button>
+  </ion-nav-buttons>
+  <ion-content>
+
+    <ion-refresher
+      pulling-text="Pull to refresh..."
+      on-refresh="doRefresh()">
+    </ion-refresher>
+
+    <p ng-show="!users" class="text-center">loading...</p>
+
+    <ion-list>
+      <ion-item class="item-thumbnail-left" ng-repeat="user in $parent.filteredUsers = (users | filter: {status:1})">
+        <img ng-src="img/user.png" />
+        <h2>{{user.firstname}} {{user.lastname}}</h2>
+        <p>New User</p>
+        <ion-option-button class="button-assertive" ng-click="upload_new(user)">
+          Upload
+        </ion-option-button>
+        <ion-option-button class="button-positive" ng-click="reject_new(user)">
+          Reject
+        </ion-option-button>
+      </ion-item>
+
+      <ion-item class="item-thumbnail-left" ng-repeat="user in $parent.filteredUsers = (users | filter: {status:2})">
+        <img ng-src="img/user.png" />
+        <h2>{{user.firstname}} {{user.lastname}}</h2>
+        <p>Edited User</p>
+        <ion-option-button class="button-assertive" ng-click="upload_edit(user)">
+          Upload
+        </ion-option-button>
+        <ion-option-button class="button-positive" ng-click="reject_edit(user)">
+          Reject
+        </ion-option-button>
+      </ion-item>
+
+      <ion-item class="item-thumbnail-left" ng-repeat="user in $parent.filteredUsers = (users | filter: {status:3})">
+        <img ng-src="img/user.png" />
+        <h2>{{user.firstname}} {{user.lastname}}</h2>
+        <p>Deleted User</p>
+        <ion-option-button class="button-assertive" ng-click="upload_del(user)">
+          Upload
+        </ion-option-button>
+        <ion-option-button class="button-positive" ng-click="reject_del(user)">
+          Reject
+        </ion-option-button>
+      </ion-item>
+
+      <ion-item class="item-thumbnail-left" ng-repeat="user in $parent.filteredUsers = (users | filter: {status:4})">
+        <img ng-src="img/user.png" />
+        <h2>{{user.firstname}} {{user.lastname}}</h2>
+        <p>Grouped User</p>
+        <ion-option-button class="button-assertive" ng-click="upload_group(user)">
+          Upload
+        </ion-option-button>
+        <ion-option-button class="button-positive" ng-click="reject_group(user)">
+          Reject
+        </ion-option-button>
+      </ion-item>
+
+
+    </ion-list>
+
+  </ion-content>
+
+  <ion-footer-bar align-title="center" class="bar-light">
+    <h1 class="title">{{filteredUsers.length || 0}} draft users</h1>
+  </ion-footer-bar>
+
+</ion-view>

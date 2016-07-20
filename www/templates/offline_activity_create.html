@@ -1,0 +1,51 @@
+<ion-modal-view  class="home-view">
+  <ion-header-bar class="dark" style="background-color: #666;color:#fff;">
+    <h1 class="title" style="color:#fff;">Add Data</h1>
+  </ion-header-bar>
+  <ion-content>
+    <form id="activity_form">
+      <div class="card">
+        <ion-list>
+          <ion-item>
+            <label class="item item-input">
+              <div class="input-label">
+                Activity Date
+              </div>
+              <input type="date" ng-model="omodal.date" max="{{today | date:'yyyy-MM-dd'}}" placeholder="Activity Date" required>
+            </label>
+          </ion-item>
+          <ion-item>
+            <label class="item item-input">
+              <div class="input-label">
+                Activity Minute
+              </div>
+              <input type="number" min="0" inputmode="numeric" pattern="[0-9]*" ng-model="omodal.minute" placeholder="Activity Minute" required>
+            </label>
+          </ion-item>
+          <ion-item ng-show="layout==='user'">
+            <label class="item item-input item-select">
+              <div class="input-label">
+                Course
+              </div>
+              <select ng-model ="omodal.course" required>
+                <!--<option></option>-->
+                <option ng-repeat="c in course" value="{{c.course_id}}">
+                  {{c.fullname}}
+                </option>
+              </select>
+              <!--<input type="hidden" ng-model="modal.coursename" value="{{c.course_name}}">-->
+            </label>
+
+          </ion-item>
+
+          <ion-item style="padding-bottom: 0px;">
+            <button class="button button-full button-balanced " ng-click="add_act_confirm()" ng-disabled="activity_form.$invalid">Confirm</button>
+          </ion-item>
+          <ion-item style="padding-top:0;">
+            <button class="button button-full button-dark" ng-click="hide_omodal()">Cancel</button>
+          </ion-item>
+        </ion-list>
+      </div>
+    </form>
+  </ion-content>
+</ion-modal-view>

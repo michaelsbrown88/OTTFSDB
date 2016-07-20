@@ -1,0 +1,12 @@
+{
+  "name": "ottfMobile",
+  "app_id": "28dcf82b",
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*"
+  ]
+}

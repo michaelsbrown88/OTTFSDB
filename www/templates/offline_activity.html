@@ -1,0 +1,100 @@
+<ion-view view-title="Activity Tracker" class="users-view title" ng-controller="OfflineActivityCtrl">
+  <ion-nav-buttons side="secondary">
+    <button ng-click="show_omodal()" class="button" ng-show="layout==='group'">
+      Add Data
+    </button>
+    <button ng-click="show_user_omodal()" class="button" ng-show="layout==='user'">
+      Add Data
+    </button>
+  </ion-nav-buttons>
+
+  <ion-content class="offline-group">
+
+    <div class="list list-inset"  ng-show="layout==='user'">
+      <label class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="text" placeholder="Search" ng-model="searchString">
+      </label>
+
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Country
+        </div>
+        <select ng-model ="countryCode">
+          <option></option>
+          <option ng:repeat="country in countries | orderBy :'name'" value="{{country.code}}" ng-selected="country.code==='AU'">
+            {{country.name}}
+          </option>
+        </select>
+      </label>
+    </div>
+
+
+
+    <ion-list class="list" ng-show="layout==='group'">
+      <div class="card" ng-repeat="css in group_trackers | filter:myFilter" style="margin:10px;">
+        <ion-item class="item item-divider" style="padding-top:5px;background-color: #8bc6e9;color:#fff;">
+          {{css.course_name}}
+          <!--<ion-option-button ng-click="go_group_tracker(group)">Tracker</ion-option-button>-->
+        </ion-item>
+        <div class="" ng-repeat="gp in css.groups" ng-class="{'active':isActive(gp)}">
+          <ion-item class="item" ng-click="add_acts(css,gp)" style="background-color: transparent;">
+            <h2>Group : {{gp.group_name}}</h2>
+          </ion-item>
+          <ion-item class="item" ng-repeat="act in gp.acts  | filter:myFilter" ng-show="gp===selection.group" style="background-color: #4d4d4d;color:#fff;">
+            <div class="row">
+              <div class="col col-60">
+                {{act.date | date:'yyyy-MM-dd'}}
+              </div>
+              <div class="col col-40">
+                {{act.minutes}} min
+              </div>
+            </div>
+            <ion-option-button class="button button-assertive" ng-click="delete_group_activity(css,gp,act)">
+              Delete
+            </ion-option-button>
+          </ion-item>
+        </div>
+
+        <!--<ion-item class="item add-user-item" href="#" ng-repeat="act in group.acts" ng-show="isShown(group)" ng-click="go_user_tracker(group,user)">-->
+        <!--<img ng-src="https://learning.ittfoceania.com/webservice/pluginfile.php/4/user/icon/f1?token=1458781b25583a0dffb66af711411000" />-->
+        <!--<h2>{{user.firstname}} {{user.lastname}}</h2>-->
+        <!--<p>{{user.username}}</p>-->
+        <!--</ion-item>-->
+      </div>
+    </ion-list>
+
+    <ion-list class="list" ng-show="layout==='user'">
+      <div class=""  ng-repeat="user in $parent.filteredUsers = (user_trackers | filter: {fullname: searchString, country: countryCode})"
+           ng-click="add_course(user)" >
+        <ion-item class="item item-thumbnail-left" href="#" style="width:100%;" ng-class="{'active':isUserActive(user)}">
+          <img ng-src="https://learning.ittfoceania.com/webservice/pluginfile.php/4/user/icon/f1?token=1458781b25583a0dffb66af711411000" />
+          <h2>{{user.firstname}} {{user.lastname}}</h2>
+          <p>{{user.username}}</p>
+        </ion-item>
+        <ion-item class="item" ng-repeat="cs in user.acts | filter:myFilter" ng-show="user===selection.user" style="background-color: #4d4d4d;color:#fff;">
+          <h2 style="color:#fff;">{{cs.course_name}}</h2>
+          <div class="row">
+            <div class="col col-60">
+              {{cs.date | date:'yyyy-MM-dd'}}
+            </div>
+            <div class="col col-40">
+              {{cs.minutes}} min
+            </div>
+          </div>
+          <ion-option-button class="button button-assertive" ng-click="delete_user_activity(user,cs)">Delete</ion-option-button>
+        </ion-item>
+      </div>
+
+    </ion-list>
+  </ion-content>
+
+  <ion-footer-bar align-title="center" class="bar-light offline-footer">
+    <div class="button-bar">
+      <button class="button left-button" ng-class="{active:layout==='group'}" ng-click="set_layout('group')">Groups</button>
+      <button class="button right-button" ng-class="{active:layout==='user'}" ng-click="set_layout('user')">Individuals</button>
+    </div>
+  </ion-footer-bar>
+
+</ion-view>
+

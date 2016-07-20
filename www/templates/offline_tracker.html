@@ -1,0 +1,21 @@
+<ion-view view-title="Activity Tracker" class="users-view title" ng-controller="OfflineTrackerCtrl">
+  <ion-content>
+    <ion-list>
+      <ion-item class="item item-avatar-left">
+        <img ng-src="{{obj.image}}" ng-if="type==2 || type==3">
+        <h2 ng-if="type==1" style="line-height: 300%;">{{obj.group_name}}</h2>
+        <h2 ng-if="type==2 || type==3" style="line-height: 300%;">{{obj.username}}</h2>
+      </ion-item>
+    </ion-list>
+    <ion-list>
+      <ion-item class="item" ng-repeat="item in data">
+        <h3 class="text-center">{{item.date | date:'dd/MM/yyyy'}}</h3>
+        <h4 class="text-center">{{item.time}}</h4>
+        <ion-option-button class="button button-dark" ng-click="delete_activity(item)">Delete</ion-option-button>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+  <ion-footer-bar style="height: 50px;">
+    <button class="button-full button-clear" style="background-color: #4cd964;color: #fff; height: 100%!important;" ng-click="add_track()">Add Activity</button>
+  </ion-footer-bar>
+</ion-view>

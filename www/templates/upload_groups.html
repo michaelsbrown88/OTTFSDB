@@ -1,0 +1,57 @@
+<ion-view view-title="Upload Groups" class="upload-users-view" ng-controller="UploadGroupsCtrl">
+  <ion-content>
+
+    <ion-refresher
+      pulling-text="Pull to refresh..."
+      on-refresh="doRefresh()">
+    </ion-refresher>
+
+    <div class="card">
+      <div class="item item-text-wrap" ng-show="grouplength > 0">
+        <h2>
+          {{grouplength}} groups are ready to upload.
+        </h2>
+        Please choose an action for each group in the list below.
+      </div>
+
+      <div class="item item-text-wrap" ng-show="grouplength == 0">
+        <h2>
+          No Draft Group at this time.
+        </h2>
+        You can use Offline Mode to create some.
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="button-bar">
+        <div class="button button-calm" ng-class="{active:layout==='group'}" ng-click="set_layout('group')">Groups</div>
+        <div class="button button-calm" ng-class="{active:layout==='user'}" ng-click="set_layout('user')">Draft Users</div>
+        <div class="button button-calm" ng-class="{active:layout==='activity'}" ng-click="set_layout('activity')">Activity</div>
+      </div>
+    </div>
+
+    <ion-list ng-show="layout==='group'">
+      <ion-item class="item-button-right" ng-repeat="group in groups | filter: myFilter">
+        <!--<ion-item class="item-button-right" ng-repeat="user in $parent.filteredUsers = (users | filter: {status:3})">-->
+        <i class="icon ion-user"></i>
+        {{group.group_name}}
+        <!--<p>{{user.username}}</p>-->
+        <!--<p class="text-assertive" ng-show="user.exists == 1">UPDATE existing user {{user.fullname}} ({{user.matchingUser.country}})<br>Usernames match: {{user.username}}</p>-->
+        <p ng-show="group.status == 1">NEW Group</p>
+        <p ng-show="group.status == 2">Edit Group</p>
+        <p ng-show="group.status == 3">Delete Group</p>
+        <button class="button" ng-class="{'button-assertive': user.exists, 'button-positive': !user.exists}" ng-click="uploadActions(group)">
+          <i class="icon ion-ios-gear"></i>
+        </button>
+      </ion-item>
+    </ion-list>
+
+    <ion-list ng-show="layout==='user'">
+
+    </ion-list>
+
+
+  </ion-content>
+
+</ion-view>

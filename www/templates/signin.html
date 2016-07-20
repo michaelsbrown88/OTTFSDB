@@ -1,0 +1,30 @@
+<ion-view view-title="Login" class="signin-view">
+  <ion-content padding="10">
+    <div class="text-center">
+      <img
+        srcset="img/logo_large.png 1024w,img/logo_medium.png 640w,img/logo_small.png 320w"
+        sizes="(min-width: 36em) 75vw, 75vw"
+        src="img/logo_large.png"
+        alt="ITTF Oceania"
+      />
+    </div>
+
+    <form ng-submit="authenticate()">
+
+      <div class="list">
+        <label class="item item-input">
+          <input type="text" placeholder="Username" ng-model="user.username">
+        </label>
+        <label class="item item-input">
+          <input type="password" placeholder="Password" ng-model="user.password">
+        </label>
+
+        <button class="button button-full button-royal" type="submit">Sign In</button>
+
+
+      </div>
+
+    </form>
+    <button class="button button-full button-dark" ng-click="offlineMode()">Offline Mode</button>
+  </ion-content>
+</ion-view>

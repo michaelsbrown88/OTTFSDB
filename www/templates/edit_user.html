@@ -1,0 +1,79 @@
+<ion-view view-title="Edit User" class="edit-user-view" ng-controller="EditUserCtrl">
+  <ion-content>
+    <div class="list">
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">First Name</span>
+        <input type="text" ng-model="user.firstname">
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Last Name</span>
+        <input type="text" ng-model="user.lastname">
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Username</span>
+        <input type="text" ng-model="user.username">
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Password (leave blank for no change)</span>
+        <input type="password" ng-model="user.newPassword">
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Email</span>
+        <input type="text" ng-model="user.email">
+      </label>
+
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Country
+        </div>
+        <select ng-model ="user.country">
+          <option></option>
+          <option ng:repeat="country in countries" value="{{country.code}}" ng-selected="country.code===user.country">
+            {{country.name}}
+          </option>
+        </select>
+      </label>
+
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Gender
+        </div>
+        <select ng-model ="user.gender">
+          <option></option>
+          <option value="M"  ng-selected="user.gender==='M'">
+            Male
+          </option>
+          <option value="F" ng-selected="user.gender==='F'">
+            Female
+          </option>
+          <option value="Unknown">
+            Unknown
+          </option>
+        </select>
+      </label>
+
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Birth Year
+        </div>
+        <select ng-model ="user.birthyear">
+          <option></option>
+          <option ng-repeat="year in years" value="{{year}}" ng-selected="user.birthyear===year">
+            {{year}}
+          </option>
+        </select>
+      </label>
+
+      <div class="padding">
+        <button class="button button-block button-positive" ng-click="save()">
+          Save Changes
+        </button>
+        <button class="button button-block button-dark" ng-click="cancel()">
+          Cancel
+        </button>
+      </div>
+
+    </div>
+
+  </ion-content>
+</ion-view>

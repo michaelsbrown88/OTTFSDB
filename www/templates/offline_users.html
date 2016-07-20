@@ -1,0 +1,61 @@
+<ion-view view-title="Draft Users" class="offline-users-view" ng-controller="OfflineUsersCtrl">
+  <ion-nav-buttons side="secondary">
+    <button ng-click="newUser()" class="button">
+      <i class="icon ion-android-add-circle"></i> New User
+    </button>
+  </ion-nav-buttons>
+  <ion-content>
+
+    <ion-refresher
+      pulling-text="Pull to refresh..."
+      on-refresh="doRefresh()">
+    </ion-refresher>
+
+    <div class="list list-inset">
+      <label class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="text" placeholder="Search" ng-model="searchString" ng-model-options="{debounce: 1000}">
+      </label>
+
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Country
+        </div>
+        <select ng-model ="countryCode">
+          <option></option>
+          <option ng:repeat="country in countries | orderBy :'name'" value="{{country.code}}"  ng-selected="country.code==='AU'">
+            {{country.name}}
+          </option>
+        </select>
+      </label>
+
+    </div>
+
+    <p ng-show="!users" class="text-center">loading...</p>
+
+    <ion-list>
+      <ion-item class="item-thumbnail-left" style="border-bottom: 1px solid #666!important;"
+                ng-repeat="user in $parent.filteredUsers = (users | filter: {fullname: searchString, country: countryCode} | filter:myFilter)">
+      <!--<ion-item class="item-thumbnail-left" collection-repeat="user in $parent.filteredUsers = (users | filter: {fullname: searchString, country: countryCode})">-->
+        <img ng-src="img/user.png" />
+        <h2>{{user.fullname}}</h2>
+        <p>{{user.username}}</p>
+        <p ng-repeat="country in countries | filter: {code: user.country}">{{country.name}}</p>
+
+        <ion-option-button class="button-assertive" ng-click="delete(user)">
+          Delete
+        </ion-option-button>
+        <ion-option-button class="button-positive" ng-click="edit(user)">
+          Edit
+        </ion-option-button>
+
+      </ion-item>
+    </ion-list>
+
+  </ion-content>
+
+  <ion-footer-bar align-title="center" class="bar-light">
+    <h1 class="title">{{filteredUsers.length || 0}} draft users</h1>
+  </ion-footer-bar>
+
+</ion-view>

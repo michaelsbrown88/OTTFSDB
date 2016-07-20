@@ -1,0 +1,76 @@
+<ion-view view-title="Upload Activity" class="users-view title" ng-controller="UploadActivityCtrl">
+
+  <ion-content class="offline-group">
+
+    <div class="card">
+      <div class="item item-text-wrap" ng-show="activitylength > 0">
+        <h2>
+          {{activitylength}} activities are ready to upload.
+        </h2>
+        Please choose an action for each activity in the list below.
+      </div>
+
+      <div class="item item-text-wrap" ng-show="activitylength == 0">
+        <h2>
+          No Draft Activity at this time.
+        </h2>
+        You can use Offline Mode to create some.
+      </div>
+
+    </div>
+
+    <ion-list class="list" ng-show="layout==='group'">
+      <div class="card" ng-repeat="css in group_trackers" style="margin:10px;">
+        <div class="" ng-repeat="gp in css.groups">
+          <ion-item class="item item-button-right" ng-repeat="act in gp.acts | filter:myFilter" style="background-color: #4d4d4d;color:#fff;">
+            <div class="row">
+              <div class="col col-60">
+                {{act.date | date:'yyyy-MM-dd'}}
+              </div>
+              <div class="col col-40">
+                {{act.minutes}} min
+              </div>
+            </div>
+            <h4 style="font-size:16px;color:#fff;">{{gp.group_name}}</h4>
+            <p ng-if="act.status===1" style="font-size:14px;color:#fff;">New Activity</p>
+            <p ng-if="act.status===2" style="font-size:14px;color:#fff;">Delete Activity</p>
+            <button class="button" ng-class="{'button-assertive': user.exists, 'button-positive': !user.exists}" ng-click="uploadActions(css,gp,act)" style="margin-top:10px;">
+              <i class="icon ion-ios-gear"></i>
+            </button>
+          </ion-item>
+        </div>
+      </div>
+    </ion-list>
+
+    <ion-list class="list" ng-show="layout==='user'">
+      <div class=""  ng-repeat="user in fusers">
+        <ion-item class="item item-button-right" ng-repeat="cs in user.acts | filter:myFilter" style="background-color: #4d4d4d;color:#fff;">
+          <div class="row">
+            <div class="col col-60">
+              {{cs.date | date:'yyyy-MM-dd'}}
+            </div>
+            <div class="col col-40">
+              {{cs.minutes}} min
+            </div>
+          </div>
+          <h4 style="font-size:16px;color:#fff;">{{user.firstname}} {{user.lastname}}</h4>
+          <p ng-if="cs.status===1" style="font-size:14px;color:#fff;">New Activity</p>
+          <p ng-if="cs.status===2" style="font-size:14px;color:#fff;">Delete Activity</p>
+          <button class="button" ng-class="{'button-assertive': user.exists, 'button-positive': !user.exists}" ng-click="uploadUserActions(user,cs)" style="margin-top:10px;">
+            <i class="icon ion-ios-gear"></i>
+          </button>
+        </ion-item>
+      </div>
+
+    </ion-list>
+  </ion-content>
+
+  <ion-footer-bar align-title="center" class="bar-light offline-footer">
+    <div class="button-bar">
+      <button class="button left-button" ng-class="{active:layout==='group'}" ng-click="set_layout('group')">Groups</button>
+      <button class="button right-button" ng-class="{active:layout==='user'}" ng-click="set_layout('user')">Individuals</button>
+    </div>
+  </ion-footer-bar>
+
+</ion-view>
+

@@ -1,0 +1,72 @@
+<ion-view view-title="{{user.fullname}}" class="home-view" ng-controller="HomeCtrl">
+  <ion-content padding="10">
+    <ion-refresher
+      pulling-text="Pull to refresh..."
+      on-refresh="doRefresh()">
+    </ion-refresher>
+
+    <div class="list card profile-card">
+
+      <div class="item item-avatar">
+        <img ng-src="{{user.profileimageurl}}">
+        <h2>{{user.fullname}}</h2>
+        <p>{{user.username}}</p>
+      </div>
+
+      <div class="item item-body">
+
+        <img class="full-image" ng-src="{{user.profileimageurl}}">
+
+        <span ng-bind-html="user.description"></span>
+
+        <div class="list card">
+
+          <div class="item item-divider">
+            About
+          </div>
+
+          <a href="#" class="item item-icon-left">
+            <i class="icon ion-earth"></i>
+
+            {{user.countryName}}
+          </a>
+
+          <a href="#" class="item item-icon-left">
+            <i class="icon ion-android-walk"></i>
+            436 activity hours
+          </a>
+
+          <a href="#" class="item item-icon-left">
+            <i class="icon ion-android-bulb"></i>
+            90 learning hours
+          </a>
+
+          <a href="#" class="item item-icon-left">
+            <i class="icon ion-ribbon-b"></i>
+            Level 1 Coach
+          </a>
+          <a href="#" class="item item-icon-left">
+            <i class="icon ion-ribbon-b"></i>
+            Level 2 Coach
+          </a>
+
+          <div class="item item-divider" ng-show="user.courses">
+            Enrolled Courses
+          </div>
+          <a href="#" class="item item-icon-left" ng-repeat="course in user.courses">
+            <i class="icon ion-easel"></i>
+            {{course.fullname}}
+          </a>
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </ion-content>
+  <ion-footer-bar align-title="center" class="bar-royal">
+    <h1 class="title">Tap <i class="icon ion-navicon-round"></i> to get started</h1>
+  </ion-footer-bar>
+</ion-view>

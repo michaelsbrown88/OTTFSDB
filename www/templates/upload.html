@@ -1,0 +1,108 @@
+<ion-view view-title="Upload" class="upload-users-view" ng-controller="UploadCtrl">
+  <ion-content>
+
+    <ion-refresher
+      pulling-text="Pull to refresh..."
+      on-refresh="doRefresh()">
+    </ion-refresher>
+
+    <div class="card">
+      <div class="item item-text-wrap" ng-show="length.group > 0 || length.user > 0 || length.activity > 0">
+        <h2>
+          <span ng-show="length.group>0">{{length.group}} groups and </span> <span ng-show="length.user>0"> {{length.user}} users and </span><span ng-show="length.activity>0"> {{length.activity}}activities </span>are ready to upload.
+        </h2>
+        Please choose an action for each in the list below.
+      </div>
+
+      <div class="item item-text-wrap" ng-show="length.group === 0 && length.user === 0 && length.activity === 0 ">
+        <h2>
+          No Draft Group at this time.
+        </h2>
+        You can use Offline Mode to create some.
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="button-bar vertical-mid-container" style="width:100%;padding:0;margin:0">
+        <div class="button button-balanced vertical-mid-inner" ng-class="{active:layout==='group'}" ng-click="set_layout('group')" style="min-height: 40px;">Groups</div>
+        <div class="button button-balanced vertical-mid-inner" ng-class="{active:layout==='user'}" ng-click="set_layout('user')" style="min-height: 40px;">Draft Users</div>
+        <!--<div class="button button-calm" ng-class="{active:layout==='activity'}" ng-click="set_layout('activity')">Activity</div>-->
+      </div>
+    </div>
+
+    <ion-list ng-show="layout==='group'">
+      <div class="card" ng-repeat="css in groups | filter:myFilter" style="margin:10px;">
+        <ion-item class="item " style="background-color: #8bc6e9;color:#fff;">
+          {{css.course_name}}
+        </ion-item>
+        <div  ng-repeat="gp in css.groups | filter:myFilter">
+          <div class="item item-button-right">
+            <i class="icon ion-user"></i>
+            <h2 style="padding-left:10px;">{{gp.group_name}}</h2>
+            <p ng-show="gp.status == 1">NEW Group</p>
+            <p ng-show="gp.status == 2">Edit Group</p>
+            <p ng-show="gp.status == 3">Delete Group</p>
+            <button class="button" ng-show="gp.status!==5" ng-class="{'button-assertive': user.exists, 'button-positive': !user.exists}" ng-click="uploadGroupActions(css,gp)">
+              <i class="icon ion-ios-gear"></i>
+            </button>
+          </div>
+          <ion-item class="item item-button-right" ng-repeat="act in gp.acts | filter:myFilter" style="background-color: #4d4d4d;color:#fff;">
+            <div class="row">
+              <div class="col col-60">
+                {{act.date | date:'yyyy-MM-dd'}}
+              </div>
+              <div class="col col-40">
+                {{act.minutes}} min
+              </div>
+            </div>
+            <!--<h4 style="font-size:16px;color:#fff;">{{gp.group_name}}</h4>-->
+            <p ng-if="act.status===1" style="font-size:14px;color:#fff;">New Activity</p>
+            <p ng-if="act.status===2" style="font-size:14px;color:#fff;">Delete Activity</p>
+            <button class="button" ng-class="{'button-assertive': user.exists, 'button-positive': !user.exists}" ng-click="uploadGroupActivityActions(css,gp,act)" style="margin-top:10px;">
+              <i class="icon ion-ios-gear"></i>
+            </button>
+          </ion-item>
+        </div>
+      </div>
+    </ion-list>
+
+    <ion-list ng-show="layout==='user'">
+      <div ng-repeat="user in $parent.filteredUsers = (fusers | filter: myFilter)">
+        <ion-item class="item-button-right" >
+          <i class="icon ion-user"></i>
+          {{user.fullname}}
+          <p>{{user.username}}</p>
+          <p class="text-assertive" ng-show="user.exists == 1">UPDATE existing user {{user.fullname}} ({{user.matchingUser.country}})<br>Usernames match: {{user.username}}</p>
+          <p ng-show="user.status == 1">NEW USER</p>
+          <p ng-show="user.status == 2">Edit USER</p>
+          <p ng-show="user.status == 3">Delete USER</p>
+          <button class="button" ng-show="user.status!==5" ng-class="{'button-assertive': user.exists, 'button-positive': !user.exists}" ng-click="uploadUserAction(user)">
+            <i class="icon ion-ios-gear"></i>
+          </button>
+        </ion-item>
+        <ion-item class="item item-button-right" ng-repeat="cs in user.acts | filter:myFilter" style="background-color: #4d4d4d;color:#fff;">
+            <div class="row">
+              <div class="col col-60">
+                {{cs.date | date:'yyyy-MM-dd'}}
+              </div>
+              <div class="col col-40">
+                {{cs.minutes}} min
+              </div>
+            </div>
+            <p ng-if="cs.status===1" style="font-size:14px;color:#fff;">New Activity</p>
+            <p ng-if="cs.status===2" style="font-size:14px;color:#fff;">Delete Activity</p>
+            <button class="button" ng-class="{'button-assertive': user.exists, 'button-positive': !user.exists}" ng-click="uploadUserActivity(user,cs)" style="margin-top:10px;">
+              <i class="icon ion-ios-gear"></i>
+            </button>
+        </ion-item>
+      </div>
+    </ion-list>
+
+    <!--<ion-list ng-show="layout==='activity'">-->
+
+    <!--</ion-list>-->
+
+
+  </ion-content>
+
+</ion-view>

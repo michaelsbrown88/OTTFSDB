@@ -1,0 +1,40 @@
+<ion-modal-view  class="home-view">
+  <ion-header-bar class="calm-bg" >
+    <h1 class="title" style="color:#fff;">Add Group</h1>
+  </ion-header-bar>
+  <ion-content>
+    <form id="group_create_form">
+      <div class="card">
+        <ion-list>
+          <ion-item>
+            <label class="item item-input">
+              <div class="input-label">
+                Group Name
+              </div>
+              <input type="text" ng-model="offmodal.groupname" placeholder="Group Name" required>
+            </label>
+            <label class="item item-input item-select">
+              <div class="input-label">
+                Course
+              </div>
+              <select ng-model ="offmodal.course" required>
+                <!--<option></option>-->
+                <option ng-repeat="c in courses" value="{{c.course_id}}">
+                  {{c.fullname}}
+                </option>
+              </select>
+            </label>
+
+          </ion-item>
+
+          <ion-item style="border:none;padding-bottom: 0px;">
+            <button class="button button-full button-calm " ng-click="add_offline_group_confirm()">Confirm</button>
+          </ion-item>
+          <ion-item style="border:none;padding-top:0;">
+            <button class="button button-full button-calm" ng-click="hide_group_modal()">Cancel</button>
+          </ion-item>
+        </ion-list>
+      </div>
+    </form>
+  </ion-content>
+</ion-modal-view>

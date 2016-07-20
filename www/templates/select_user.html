@@ -1,0 +1,53 @@
+<ion-modal-view  class="user-view">
+  <ion-header-bar class="dark-bg">
+    <h1 class="title" style="color:#fff;">Select users</h1>
+  </ion-header-bar>
+  <ion-content>
+    <div class="list list-inset">
+      <label class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="text" placeholder="Search" ng-model="searchString">
+      </label>
+
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Country
+        </div>
+        <select ng-model ="countryCode">
+          <option></option>
+          <option ng:repeat="country in countries | orderBy :'name'" value="{{country.code}}" ng-selected="country.code==='AU'">
+            {{country.name}}
+          </option>
+        </select>
+      </label>
+    </div>
+    <ion-list class="list">
+      <div class="row"  ng-repeat="user in $parent.filteredUsers = (ffusers | filter: {fullname: searchString, country: countryCode})">
+
+        <ion-item class="item item-thumbnail-left col-80 item-borderless" href="#">
+          <img ng-src="https://learning.ittfoceania.com/webservice/pluginfile.php/4/user/icon/f1?token=1458781b25583a0dffb66af711411000" style="border:none;" />
+          <h2 style="border: none;">{{user.firstname}} {{user.lastname}}</h2>
+          <p style="border: none;">{{user.username}}</p>
+        </ion-item>
+
+        <div class="col-20">
+          <label class="toggle toggle-balanced">
+          <input type="checkbox" ng-change="toggleChange(bbb,user)" ng-model="bbb">
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+          </label>
+        </div>
+      </div>
+
+
+    </ion-list>
+
+  </ion-content>
+  <ion-footer-bar>
+    <div class="button-bar">
+      <button class="button left-button button-positive" ng-click="add_users()">Confirm</button>
+      <button class="button right-button button-dark" ng-click="hide_select_user_modal()">Cancel</button>
+    </div>
+  </ion-footer-bar>
+</ion-modal-view>

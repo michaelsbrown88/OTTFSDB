@@ -1,0 +1,79 @@
+<!--<ion-view view-title="Filter" class="home-view" >-->
+  <!--<ion-content padding-10>-->
+    <!--<h3 class="text-center">Search Filter</h3>-->
+
+    <!--<div class="card">-->
+      <!--<ion-list>-->
+        <!--<ion-item>-->
+          <!--<label class="item item-input item-select">-->
+            <!--<div class="input-label">-->
+              <!--Country-->
+            <!--</div>-->
+            <!--<select ng-model ="data.countryCode">-->
+              <!--&lt;!&ndash;<option></option>&ndash;&gt;-->
+              <!--<option ng-repeat="country in countries" value="{{country.code}}" ng-selected="country.code==='AU'">-->
+                <!--{{country.name}}-->
+              <!--</option>-->
+            <!--</select>-->
+          <!--</label>-->
+
+          <!--<div class="item range range-positive">-->
+            <!--<h3>Age </h3>-->
+            <!--<div class="range-label" style="margin-left:5px;">{{range.from}}</div>-->
+            <!--<ui-multi-range ng-step="1" ng-min="ageMin" ng-max="ageMax" ng-model-min="range.from" ng-model-max="range.to" ng-change-min="somethingHasChanged()" ng-change-max="somethingHasChanged()"></ui-multi-range>-->
+            <!--<div class="range-label">{{range.to}}</div>-->
+          <!--</div>-->
+          <!--<div class="item" style="width:60%;margin-left:10%;">-->
+            <!--<button class="button search-button" style="background-color: #4b8bf4;color:#fff;float:right;" ng-click="search()"><i class="icon ion-search"></i> Filter</button>-->
+          <!--</div>-->
+
+        <!--</ion-item>-->
+
+      <!--</ion-list>-->
+    <!--</div>-->
+
+  <!--</ion-content>-->
+<!--</ion-view>-->
+
+<ion-modal-view  class="home-view">
+  <ion-header-bar class="positive" style="background-color: #4da7dc;color:#fff;">
+    <h1 class="title" style="color:#fff;">Filter</h1>
+  </ion-header-bar>
+  <ion-content>
+    <!--<h3 class="text-center" style="margin-top:20px;">Search Filter</h3>-->
+
+    <div class="card">
+      <ion-list>
+        <ion-item>
+          <label class="item item-input item-select">
+            <div class="input-label">
+              Country
+            </div>
+            <select ng-model ="data.countryCode">
+              <!--<option></option>-->
+              <option ng-repeat="country in countries" value="{{country.code}}" ng-selected="country.code==='AU'">
+                {{country.name}}
+              </option>
+            </select>
+          </label>
+
+          <div class="item range range-positive">
+            <h3>Age </h3>
+            <div class="range-label" style="margin-left:5px;">{{range.from}}</div>
+            <ui-multi-range ng-step="1" ng-min="ageMin" ng-max="ageMax" ng-model-min="range.from" ng-model-max="range.to" ng-change-min="somethingHasChanged()" ng-change-max="somethingHasChanged()"></ui-multi-range>
+            <div class="range-label">{{range.to}}</div>
+          </div>
+          <ion-item class="item" style="width:60%;margin-left:20%;">
+            <button class="button button-full" style="background-color: #4b8bf4;color:#fff;" ng-click="search()"><i class="icon ion-search"></i> Filter</button>
+          </ion-item>
+
+          <ion-item class="item" style="width:60%;margin-left:20%;">
+            <button class="button button-full" style="background-color: #4b8bf4;color:#fff;" ng-click="fetch()"><i class="icon ion-earth"></i> Clear Filters</button>
+          </ion-item>
+
+        </ion-item>
+
+      </ion-list>
+    </div>
+  </ion-content>
+</ion-modal-view>
