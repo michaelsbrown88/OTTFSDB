@@ -96,7 +96,8 @@ angular.module('ottfApp', [
   'offlineActivityControl',
   'offlineTrackerController',
   'activityControl',
-  'groupController'
+  'groupController',
+    'questionerController'
 ])
 
   .run(function($ionicPlatform) {
@@ -139,8 +140,36 @@ angular.module('ottfApp', [
             templateUrl: "templates/user_profile.html"
           }
         },
-        controller: 'UserProfileCtrl'
+      controller: 'UserProfileCtrl'
       })
+    
+    //====================
+    
+     .state('app.questioner', {
+        url: "/questioner",
+        views: {
+          'menuContent': {
+            templateUrl: "templates/questioner.html"
+          }
+        },
+        controller: 'questionerCtrl'
+      })
+    
+    
+    /*
+    .state('questioner', {
+        url: '/questioner',
+        controller: 'questionerCtrl',
+        templateUrl: 'templates/questioner.html'
+      })*/
+    
+    
+    
+    
+    
+    
+    
+    //====================
       .state('app.users', {
         url: "/users",
         views: {
@@ -315,5 +344,6 @@ angular.module('ottfApp', [
       });
 
     // default route
-    $urlRouterProvider.otherwise("/app/home");
+    //$urlRouterProvider.otherwise("/app/home");
+    $urlRouterProvider.otherwise("/app/questioner");
   });
