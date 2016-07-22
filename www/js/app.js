@@ -97,7 +97,7 @@ angular.module('ottfApp', [
   'offlineTrackerController',
   'activityControl',
   'groupController',
-    'questionerController'
+    'questionnaireController'
 ])
 
   .run(function($ionicPlatform) {
@@ -145,14 +145,14 @@ angular.module('ottfApp', [
     
     //====================
     
-     .state('app.questioner', {
-        url: "/questioner",
+     .state('app.questionnaire', {
+        url: "/questionnaire",
         views: {
           'menuContent': {
-            templateUrl: "templates/questioner.html"
+            templateUrl: "templates/questionnaire.html"
           }
         },
-        controller: 'questionerCtrl'
+        controller: 'questionnaireCtrl'
       })
     
     
@@ -345,5 +345,5 @@ angular.module('ottfApp', [
 
     // default route
     //$urlRouterProvider.otherwise("/app/home");
-    $urlRouterProvider.otherwise("/app/questioner");
+    $urlRouterProvider.otherwise("/app/questionnaire");
   });
