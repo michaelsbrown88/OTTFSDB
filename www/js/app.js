@@ -77,6 +77,7 @@ function MultiRangeDirective ($compile) {
 
 angular.module('ottfApp', [
   'ionic',
+  'ngCordova',
   'authController',
   'appController',
   'userProfileController',
@@ -344,6 +345,6 @@ angular.module('ottfApp', [
       });
 
     // default route
-    //$urlRouterProvider.otherwise("/app/home");
-    $urlRouterProvider.otherwise("/app/questionnaire");
+    $urlRouterProvider.otherwise("/app/home");
+    //$urlRouterProvider.otherwise("/app/questionnaire");
   });

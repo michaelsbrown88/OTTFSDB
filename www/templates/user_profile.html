@@ -17,7 +17,8 @@
 
         <div class="row">
           <div class="col-25">
-            <img class="full-image" ng-src="{{user.profileimageurl}}">
+            <img id="myImage" class="full-image" ng-src="{{user.profileimageurl}}">
+              <button ng-click="uploadPic()">Take Picture</button>
           </div>
           <div class="col-75 padding-left">
             <h1 class="user-profile-name">{{user.fullname}}</h1>
