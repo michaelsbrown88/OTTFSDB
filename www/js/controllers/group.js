@@ -254,6 +254,17 @@ angular.module('groupController', ['offlineData', 'localStorage'])
     };
 
     $scope.show_users=function (c, g) {
+        
+        
+      if(localStorage.getItem("moodle_role") == 5){
+          for(i=0;i<g.users.length;i++){
+              if(g.user[i].country != localStorage.getItem("user_country")){
+                  g.user.splice(i,1);
+              }
+          }
+      }
+            
+        
       $scope.selection.course=c;
       $scope.selection.group=g;
       var index=$scope.ggroups.indexOf(c);
@@ -265,6 +276,7 @@ angular.module('groupController', ['offlineData', 'localStorage'])
         $scope.showGroup.course=c;
         $scope.showGroup.group=g;
       }
+        
       if(!g.users || g.users.length===0){
         if(g.status==1)return;
         $offlineData.get_gusers(g.group_id,function(res){

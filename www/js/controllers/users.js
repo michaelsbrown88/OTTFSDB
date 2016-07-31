@@ -17,8 +17,9 @@ angular.module('usersController', ['moodleData', 'localStorage'])
       //   $scope.users = $localStorage.getObject('moodle_users');
       // }
       $scope.countries = $moodleData.country_list();
+      console.log($scope.countries);
       $scope.country={};
-      $scope.countryCode='AU';
+      $scope.countryCode='AUS';
 
     });
 
@@ -62,6 +63,8 @@ angular.module('usersController', ['moodleData', 'localStorage'])
             users[k].status = 0;
             users[k].fullname=users[k].firstname+' '+users[k].lastname;
           });
+            
+          
           $scope.users=users;
           $localStorage.setObject('moodle_users',users);
         });

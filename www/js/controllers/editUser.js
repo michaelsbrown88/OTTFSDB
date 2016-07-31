@@ -133,7 +133,6 @@ angular.module('editUserController', ['moodleData', 'localStorage'])
       var users=$localStorage.getItem('moodle_users');
       $scope.user=users[$stateParams.id];
       $scope.user.birthyear=parseInt($scope.user.birthyear);
-      console.log('country='+JSON.stringify($scope.user));
       // angular.forEach(users,function (uu, index, rr) {
       //   if(uu.id===$stateParams.id){
       //     $scope.users=uu;

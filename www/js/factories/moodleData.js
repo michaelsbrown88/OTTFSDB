@@ -255,7 +255,19 @@ angular.module('moodleData', [])
         };
         $http(req).then(callback);
       },
-      country_list: function(){
+     /* country_list: function(callback){
+        var req = {
+          method: 'GET',
+          url: "https://learning.ittfoceania.com/webservice/tg_country.php",
+        };
+        $http(req).then(callback);
+      }, 
+    */
+     country_list: function(){
+        return $localStorage.getObject('countries');
+      },
+        
+     /* country_list: function(){
         var countries = [
           {"code": 'AD', "name": 'Andorra'},
           {"code": 'AE', "name": 'United Arab Emirates'},
@@ -508,7 +520,7 @@ angular.module('moodleData', [])
           {"code": 'ZW', "name": 'Zimbabwe'}
         ];
         return countries;
-      },
+      },*/
       year_list: function(){
         var years = [];
         var year = new Date().getFullYear();

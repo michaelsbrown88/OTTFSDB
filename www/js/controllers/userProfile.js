@@ -1,5 +1,5 @@
 angular.module('userProfileController', ['localStorage', 'moodleData'])
-  .controller('UserProfileCtrl', function($scope, $stateParams, $localStorage, $moodleData,$cordovaCamera,$cordovaFileTransfer){
+  .controller('UserProfileCtrl', function($scope, $stateParams, $localStorage, $moodleData,$cordovaCamera,$cordovaFileTransfer,$state,$offlineData,$http){
 
     $scope.uploadPic =  function(){
 
@@ -42,7 +42,17 @@ angular.module('userProfileController', ['localStorage', 'moodleData'])
     };
     
     
-    
+    $scope.editProfile = function(){
+        var user_id = 0;
+        var offUsers = $localStorage.getObject('offlineUsers');
+        for(i=0;i<offUsers.length;i++){
+            if(offUsers[i].uid == $scope.user.id ){
+                user_id = offUsers[i].id;
+            }
+        }
+        
+        $state.go("app.edituser", {id:user_id});
+    };
     
     $scope.$on('$ionicView.beforeEnter', function() {
       // authorize
@@ -91,45 +101,17 @@ angular.module('userProfileController', ['localStorage', 'moodleData'])
             });
           }
         });
-        // fetch the chosen user
-        // $moodleData.get_user($stateParams.id, function(res){
-        //   if(res.data.users.length > 0){
-        //     $scope.user = res.data.users[0];
-        //     // inject country name
-        //     var countryList = $moodleData.country_list();
-        //     angular.forEach(countryList, function(v,k){
-        //       if($scope.user.country === countryList[k].code){
-        //         $scope.user.countryName = countryList[k].name;
-        //       }
-        //     });
-        //     // inject courses
-        //     $scope.user.totalGrades = 0;
-        //     $moodleData.get_users_courses(res.data.users[0].id, function(res){
-        //       if(res.data.length > 0){
-        //         $scope.user.courses = res.data;
-        //         // get grades
-        //         angular.forEach(res.data, function(v,k){
-        //           $moodleData.get_user_course_grades($scope.user.id, v.id, function(grade){
-        //             if(!grade.data.exception){
-        //               $scope.user.courses[k].grades = grade.data.items[0].grades[0];
-        //               $scope.user.totalGrades += grade.data.items[0].grades[0].grade;
-        //             }
-        //           });
-        //         });
-        //       }
-        //     });
-        //   }
-        //
-        //
-        //   $scope.$broadcast('scroll.refreshComplete');
-        // });
 
       } else {
-
+ 
         // fetch the logged in user
         $moodleData.get_user_by_username($localStorage.get('ottfUsername'), function(res){
           if(res.data.users && res.data.users.length > 0){
             $scope.user = res.data.users[0];
+            //console.log($localStorage.getItem("country"));
+            if(localStorage.getItem("user_country")==undefined){
+                localStorage.setItem("user_country",$scope.user.country);
+            }
             // inject country name
             var countryList = $moodleData.country_list();
             angular.forEach(countryList, function(v,k){

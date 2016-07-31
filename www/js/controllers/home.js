@@ -1,5 +1,6 @@
 angular.module('homeController', ['localStorage', 'moodleData'])
   .controller('HomeCtrl', function($scope, $localStorage, $moodleData){
+    
 
     $scope.$on('$ionicView.beforeEnter', function() {
       // authorize
@@ -16,10 +17,9 @@ angular.module('homeController', ['localStorage', 'moodleData'])
       fetchData();
     };
 
-
     function fetchData(){
       $scope.user = null;
-
+        
       $moodleData.get_user_by_username($localStorage.get('ottfUsername'), function(res){
         if(res.data.users.length > 0){
           $scope.user = res.data.users[0];

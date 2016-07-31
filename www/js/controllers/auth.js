@@ -10,7 +10,7 @@ angular.module('authController', ['localStorage', 'moodleData'])
       var username=$localStorage.getItem('ottfUsername');
       console.log('uuuu='+username);
       if(username && username.length>0){
-        $scope.user.username=username;
+        $scope.user.username=username;        
       }else{
         $scope.signout();
       }
@@ -48,6 +48,19 @@ angular.module('authController', ['localStorage', 'moodleData'])
         return;
       }
 
+        
+      function set_role(username){
+        $http.get("https://learning.ittfoceania.com/webservice/tg_user_role.php?username=" + username)
+        .then(function(response){
+            localStorage.setItem("moodle_role",response.data.role[0].roleid);
+        });   
+      }
+        
+      function get_countries(){
+        $http.get("https://learning.ittfoceania.com/webservice/tg_country.php").then(function(response){
+            $localStorage.setObject('countries',response.data.countries);  
+        });
+      }
       $scope.showLoader();
 
       var req = {
@@ -66,6 +79,8 @@ angular.module('authController', ['localStorage', 'moodleData'])
             // store the token
             $localStorage.set('ottfToken', res.data.token);
             $localStorage.set('ottfUsername', $scope.user.username);
+            set_role($scope.user.username);
+            get_countries();
             $scope.user = {};
             $state.go('app.home');
           } else {

@@ -23,7 +23,7 @@
         </div>
         <select ng-model ="countryCode">
           <option></option>
-          <option ng:repeat="country in countries | orderBy :'name'" value="{{country.code}}"   ng-selected="country.code==='AU'">
+          <option ng:repeat="country in countries | orderBy :'name'" value="{{country.code}}"   ng-selected="country.code=='AUS'">
             {{country.name}}
           </option>
         </select>

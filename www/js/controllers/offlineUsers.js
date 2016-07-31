@@ -70,6 +70,9 @@ angular.module('offlineUsersController', ['moodleData', 'localStorage'])
             users[k].status = 0;
             users[k].fullname=users[k].firstname+' '+users[k].lastname;
           });
+            
+            
+          
           $scope.users=users;
           $localStorage.setObject('moodle_users',users);
         });

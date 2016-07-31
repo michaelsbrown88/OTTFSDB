@@ -17,15 +17,17 @@
 
         <div class="row">
           <div class="col-25">
-            <img id="myImage" class="full-image" ng-src="{{user.profileimageurl}}">
-              <button ng-click="uploadPic()">Take Picture</button>
+            <img id="myImage" class="full-image" ng-click="uploadPic()" ng-src="{{user.profileimageurl}}">
+            <i style="position:absolute;left:30px;top:20px;" class="icon ion-camera" ></i>
           </div>
           <div class="col-75 padding-left">
             <h1 class="user-profile-name">{{user.fullname}}</h1>
             <h3>
+              
               <i class="icon ion-earth"></i>
               {{user.countryName}}
             </h3>
+            <button ng-click="editProfile()">Edit Profile</button>
           </div>
         </div>
 

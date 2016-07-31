@@ -13,5 +13,15 @@ angular.module('offlineController', ['localStorage'])
       var users = $localStorage.getObject('offlineUsers');
       return users.length;
     }
+    
+    $scope.showMenu = function(arr){
+        var match = false;
+        for(i=0;i<arr.length;i++){
+            if(arr[i]==localStorage.getItem('moodle_role')){
+               match = true; 
+            }
+        }
+        return match;
+    };
 
   });
