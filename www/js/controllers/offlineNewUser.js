@@ -1,6 +1,6 @@
 angular.module('offlineNewUserController', ['moodleData', 'localStorage'])
   .controller('OfflineNewUserCtrl', function($scope, $state, $moodleData, $localStorage, $ionicPopup, $ionicHistory){
-
+    $scope.countryCode=localStorage.getItem('user_country');
     $scope.$on('$ionicView.afterEnter', function(){
       $scope.countries = $moodleData.country_list();
       $scope.years = $moodleData.year_list();
@@ -26,7 +26,15 @@ angular.module('offlineNewUserController', ['moodleData', 'localStorage'])
         template: message
       });
     };
-
+    
+    $scope.haveNoRights = function(){
+        if(localStorage.getItem('moodle_role')==4){
+            return true;
+        }else{
+            return false;
+        }
+    };
+    
     $scope.save = function(){
       // validation
       var ut = /^[0-9a-zA-Z\.\-]+$/;
@@ -55,10 +63,10 @@ angular.module('offlineNewUserController', ['moodleData', 'localStorage'])
         $scope.showAlert('Password must have at least 1 uppercase, 1 lowercase, 1 number and 1 special character.');
         return;
       }
-      if(!et.test($scope.user.email)){
+     /* if(!et.test($scope.user.email)){
         $scope.showAlert('Email address not valid.');
         return;
-      }
+      }*/
       if($scope.user.country === ""){
         $scope.showAlert('Country cannot be blank.');
         return;

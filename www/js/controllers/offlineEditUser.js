@@ -1,6 +1,7 @@
 angular.module('offlineEditUserController', ['moodleData', 'localStorage'])
   .controller('OfflineEditUserCtrl', function($scope, $state, $stateParams, $moodleData, $localStorage, $ionicLoading, $ionicPopup, $ionicHistory){
 
+    
     $scope.$on('$ionicView.beforeEnter', function(){
       $scope.countries = $moodleData.country_list();
       $scope.years = $moodleData.year_list();
@@ -9,7 +10,7 @@ angular.module('offlineEditUserController', ['moodleData', 'localStorage'])
     $scope.$on('$ionicView.afterEnter', function(){
       fetchData();
     });
-
+    
     $scope.showLoader = function() {
       $ionicLoading.show({
         template: '<ion-spinner icon="spiral"></ion-spinner><br>Loading'
@@ -30,6 +31,8 @@ angular.module('offlineEditUserController', ['moodleData', 'localStorage'])
         template: message
       });
     };
+    
+    
 
     $scope.save = function(){
       // validation

@@ -1,6 +1,7 @@
 angular.module('editUserController', ['moodleData', 'localStorage'])
   .controller('EditUserCtrl', function($scope, $state, $stateParams, $moodleData, $localStorage, $ionicLoading, $ionicPopup, $ionicViewService,$offlineData){
-
+ 
+    
     $scope.$on('$ionicView.beforeEnter', function() {
       // authorize
       $moodleData.authorize();
@@ -16,6 +17,7 @@ angular.module('editUserController', ['moodleData', 'localStorage'])
 
 
     });
+    
 
     $scope.showLoader = function() {
       $ionicLoading.show({

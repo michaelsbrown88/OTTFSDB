@@ -1,6 +1,6 @@
 angular.module('newUserController', ['moodleData', 'localStorage'])
-  .controller('NewUserCtrl', function($scope, $state, $moodleData, $localStorage, $ionicPopup, $ionicViewService,$offlineData){
-
+  .controller('NewUserCtrl', function($scope, $state, $moodleData, $localStorage, $ionicPopup, $ionicViewService,$offlineData,$http){
+    $scope.countryCode=localStorage.getItem('user_country');
     $scope.$on('$ionicView.beforeEnter', function() {
       // authorize
       $moodleData.authorize();
@@ -30,6 +30,22 @@ angular.module('newUserController', ['moodleData', 'localStorage'])
         template: message
       });
     };
+    
+    
+    $scope.haveNoRights = function(){
+        if(localStorage.getItem('moodle_role')==4){
+            return true;
+        }else{
+            return false;
+        }
+    };
+    
+    $scope.check_username = function(){
+      $http.get("https://learning.ittfoceania.com/webservice/tg_check_username.php?username=" + $scope.user.firstname)
+      .then(function(response){
+            $scope.user.username = response.data.username[0].value.toLowerCase();  
+      });  
+    };
 
     $scope.save = function(){
       // validation
@@ -47,6 +63,8 @@ angular.module('newUserController', ['moodleData', 'localStorage'])
         $scope.showAlert('Username contains invalid characters.');
         return;
       }
+        
+
       if($scope.user.password.length < 8){
         $scope.showAlert('Password must be at least 8 characters long.');
         return;
@@ -59,14 +77,15 @@ angular.module('newUserController', ['moodleData', 'localStorage'])
         $scope.showAlert('Password must have at least 1 uppercase, 1 lowercase, 1 number and 1 special character.');
         return;
       }
-      if(!et.test($scope.user.email)){
+  /*    if(!et.test($scope.user.email)){
         $scope.showAlert('Email address not valid.');
         return;
-      }
+      }*/
       if($scope.user.country === ""){
         $scope.showAlert('Country cannot be blank.');
         return;
       }
+        
       // $moodleData.create_user($scope.user, function(res){
       //   console.log(res);
       //   if (res.data.errorcode){
