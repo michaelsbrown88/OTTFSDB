@@ -1,5 +1,5 @@
 angular.module('userProfileController', ['localStorage', 'moodleData'])
-  .controller('UserProfileCtrl', function($scope, $stateParams, $localStorage, $moodleData,$cordovaCamera,$cordovaFileTransfer,$state,$offlineData,$http){
+  .controller('UserProfileCtrl', function($scope, $stateParams, $localStorage, $moodleData,$cordovaCamera,$cordovaFileTransfer,$state,$offlineData,$http,$location,$rootScope){
 
     $scope.uploadPic =  function(){
 
@@ -41,6 +41,11 @@ angular.module('userProfileController', ['localStorage', 'moodleData'])
 
     };
     
+    $scope.census= function(){
+        $rootScope.chk = true;
+        $location.path('/app/questionnaire');  
+    };
+    
     
     $scope.editProfile = function(){
         var user_id = 0;
@@ -62,6 +67,9 @@ angular.module('userProfileController', ['localStorage', 'moodleData'])
     $scope.$on('$ionicView.afterEnter', function() {
       // fetch initial view data
       fetchData();
+      if(localStorage.getItem('questionnaire')==undefined){
+          $location.path('/app/questionnaire');  
+      }
     });
 
     // pull to refresh

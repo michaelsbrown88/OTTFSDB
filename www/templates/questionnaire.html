@@ -1,75 +1,65 @@
-<ion-view view-title="Census Questions on Disability" class="offline-users-view" ng-controller="questionnaireCtrl">
-    <ion-nav-buttons side="secondary" ng-click="test()">
-        <i class="icon ion-checkmark-circled " ng-click="test()"></i>
-    </ion-nav-buttons>
+<ion-view view-title="Census Questions on Disability" class="offline-users-view" ng-controller="questionnaireCtrl" cache-view="false">
     
     <ion-content>
        
- <div>
-    <h4 class="title custom-title">Introductory phrase:</h4>
-    <p>The next questions ask about difficulties you may have doing certain activities because of    a HEALTH PROBLEM.</p>
+ <div class = "padding">
+    <p>These questions ask about difficulties you may have doing certain activities because of a HEALTH PROBLEM.</p>
 
+      
+     <ion-list class="padding">
       <p class="qheading">1. Do you have difficulty seeing, even if wearing glasses?</p>
-     <ion-list>
       <ion-radio ng-model="input.q1choice" ng-value="'A'" name="group1">a. No - no difficulty</ion-radio>
       <ion-radio ng-model="input.q1choice" ng-value="'B'" name="group1">b. Yes – some difficulty</ion-radio>
       <ion-radio ng-model="input.q1choice" ng-value="'C'" name="group1"> c. Yes – a lot of difficulty </ion-radio>
       <ion-radio ng-model="input.q1choice" ng-value="'D'" name="group1">d. Cannot do at all</ion-radio>
     </ion-list>
-        
-     {{q1choice}}
      
-     
-     
-     
+    
+     <ion-list class="padding">
       <p class="qheading">2. Do you have difficulty hearing, even if using a hearing aid?</p>
-     <ion-list>
       <ion-radio ng-model="input.q2choice" ng-value="'A'" name="group2">a. No- no difficulty</ion-radio>
       <ion-radio ng-model="input.q2choice" ng-value="'B'" name="group2">b. Yes – some difficulty </ion-radio>
       <ion-radio ng-model="input.q2choice" ng-value="'C'" name="group2"> c. Yes – a lot of difficulty </ion-radio>
       <ion-radio ng-model="input.q2choice" ng-value="'D'" name="group2">d. Cannot do at all</ion-radio>
     </ion-list>   
         
+      
+     <ion-list class="padding">
       <p class="qheading">3. Do you have difficulty walking or climbing steps? </p>
-     <ion-list>
       <ion-radio ng-model="input.q3choice" ng-value="'A'" name="group3">a. No- no difficulty</ion-radio>
       <ion-radio ng-model="input.q3choice" ng-value="'B'" name="group3">b. Yes – some difficulty </ion-radio>
       <ion-radio ng-model="input.q3choice" ng-value="'C'" name="group3"> c. Yes – a lot of difficulty </ion-radio>
       <ion-radio ng-model="input.q3choice" ng-value="'D'" name="group3">d. Cannot do at all </ion-radio>
     </ion-list>   
      
-    <p class="qheading">4. Do you have difficulty remembering or concentrating?</p>
-     <ion-list>
+    
+     <ion-list class="padding">
+      <p class="qheading">4. Do you have difficulty remembering or concentrating?</p>
       <ion-radio ng-model="input.q4choice" ng-value="'A'" name="group4">a. No- no difficulty</ion-radio>
       <ion-radio ng-model="input.q4choice" ng-value="'B'" name="group4">b. Yes – some difficulty </ion-radio>
-      <ion-radio ng-model="input.q4choice" ng-value="'c'" name="group4"> c. Yes – a lot of difficulty </ion-radio>
-      <ion-radio ng-model="input.q4choice" ng-value="'d'" name="group4">d. Cannot do at all </ion-radio>
+      <ion-radio ng-model="input.q4choice" ng-value="'C'" name="group4"> c. Yes – a lot of difficulty </ion-radio>
+      <ion-radio ng-model="input.q4choice" ng-value="'D'" name="group4">d. Cannot do at all </ion-radio>
     </ion-list> 
         
-     <p class="qheading">5. Do you have difficulty (with self-care such as) washing all over or dressing?</p>
-     <ion-list>
+     
+     <ion-list class="padding">
+      <p class="qheading">5. Do you have difficulty (with self-care such as) washing all over or dressing?</p>
       <ion-radio ng-model="input.q5choice" ng-value="'A'" name="group5">a. No- no difficulty</ion-radio>
       <ion-radio ng-model="input.q5choice" ng-value="'B'" name="group5">b. Yes – some difficulty </ion-radio>
-      <ion-radio ng-model="input.q5choice" ng-value="'c'" name="group5"> c. Yes – a lot of difficulty </ion-radio>
-      <ion-radio ng-model="input.q5choice" ng-value="'d'" name="group5">d. Cannot do at all </ion-radio>
+      <ion-radio ng-model="input.q5choice" ng-value="'C'" name="group5"> c. Yes – a lot of difficulty </ion-radio>
+      <ion-radio ng-model="input.q5choice" ng-value="'D'" name="group5">d. Cannot do at all </ion-radio>
     </ion-list> 
         
-<p class="qheading">6. Using your usual (customary) language, do you have difficulty communicating, for example understanding or being understood?</p>
-     <ion-list>
+
+     <ion-list class="padding">
+      <p class="qheading">6. Using your usual (customary) language, do you have difficulty communicating, for example understanding or being understood?</p>
       <ion-radio ng-model="input.q6choice" ng-value="'A'" name="group6">a. No- no difficulty</ion-radio>
       <ion-radio ng-model="input.q6choice" ng-value="'B'" name="group6">b. Yes – some difficulty </ion-radio>
-      <ion-radio ng-model="input.q6choice" ng-value="'c'" name="group6"> c. Yes – a lot of difficulty </ion-radio>
-      <ion-radio ng-model="input.q6choice" ng-value="'d'" name="group6">d. Cannot do at all </ion-radio>
+      <ion-radio ng-model="input.q6choice" ng-value="'C'" name="group6"> c. Yes – a lot of difficulty </ion-radio>
+      <ion-radio ng-model="input.q6choice" ng-value="'D'" name="group6">d. Cannot do at all </ion-radio>
     </ion-list> 
-   
-    
-
-
-
-     
-     
-     
-     
+      <button class="button button-block button-positive" ng-click="add()">Submit</button>
      </div>
+   
     </ion-content>
 </ion-view>

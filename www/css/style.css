@@ -93,3 +93,7 @@ div.active {
 
 .larger{font-size:90px !impotant;}
 
+.qheading{
+    display:block;
+    padding-top:20px;
+}

@@ -1,5 +1,5 @@
 angular.module('homeController', ['localStorage', 'moodleData'])
-  .controller('HomeCtrl', function($scope, $localStorage, $moodleData){
+  .controller('HomeCtrl', function($scope, $localStorage, $moodleData,$location){
     
 
     $scope.$on('$ionicView.beforeEnter', function() {
@@ -10,6 +10,8 @@ angular.module('homeController', ['localStorage', 'moodleData'])
     $scope.$on('$ionicView.afterEnter', function() {
       // fetch initial view data
       fetchData();
+
+        
     });
 
     // pull to refresh
