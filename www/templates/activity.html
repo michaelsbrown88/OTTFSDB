@@ -33,7 +33,7 @@
 
     <ion-list class="list" ng-show="layout==='group'">
       <div class="card" ng-repeat="css in group_trackers" style="margin:10px;">
-        <ion-item class="item item-divider" style="padding-top:5px;background-color: #8bc6e9;color:#fff;">
+        <ion-item class="item item-divider" style="padding-top:5px;background-color: #4da7dc;color:#fff;">
           {{css.course_name}}
           <!--<ion-option-button ng-click="go_group_tracker(group)">Tracker</ion-option-button>-->
         </ion-item>
@@ -41,7 +41,7 @@
           <ion-item class="item" ng-click="add_acts(css,gp)" style="background-color: transparent;">
             <h2>Group : {{gp.group_name}}</h2>
           </ion-item>
-          <ion-item class="item" ng-repeat="act in gp.acts | filter:myFilter" ng-show="gp===selection.group" style="background-color: #4d4d4d;color:#fff;">
+          <ion-item class="item" style="background: #efefef;" ng-repeat="act in gp.acts | filter:myFilter" ng-show="gp===selection.group" style="background-color: #4d4d4d;color:#fff;">
             <div class="row">
               <div class="col col-60">
                 {{act.date | date:'yyyy-MM-dd'}}
@@ -91,8 +91,8 @@
 
   <ion-footer-bar align-title="center" class="bar-light offline-footer">
     <div class="button-bar">
-      <button class="button left-button" ng-class="{active:layout==='group'}" ng-click="set_layout('group')">Groups</button>
-      <button class="button right-button" ng-class="{active:layout==='user'}" ng-click="set_layout('user')">Individuals</button>
+      <button class="button button-royal left-button" ng-class="{active:layout==='group'}" ng-click="set_layout('group')">Groups</button>
+      <button class="button button-dark right-button" ng-class="{active:layout==='user'}" ng-click="set_layout('user')">Individuals</button>
     </div>
   </ion-footer-bar>
 
