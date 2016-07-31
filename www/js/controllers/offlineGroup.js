@@ -8,7 +8,7 @@ angular.module('offlineGroupController', ['offlineData', 'localStorage'])
     $scope.$on('$ionicView.afterEnter', function() {
       // fetch initial view data
 
-      $scope.countryCode='AU';
+      $scope.countryCode=localStorage.getItem('user_country');
       $scope.groups=[];
       $scope.fusers=[];
 
@@ -32,10 +32,28 @@ angular.module('offlineGroupController', ['offlineData', 'localStorage'])
 
     $scope.select_flag=false;
     $scope.select_users=[];
-
+    
+    $scope.haveNoRights = function(){
+        if(localStorage.getItem('moodle_role')==4){
+            return true;
+        }else{
+            return false;
+        }
+    };
 
     $scope.read_groups=function(){
       $scope.fusers = $localStorage.getItem('moodle_users');
+        
+        
+    if(localStorage.getItem('moodle_role')==4){
+        angular.forEach($scope.ffusers, function(v, k){
+              //console.log($scope.ffusers[k]);
+               if(localStorage.getItem('user_country')!=$scope.ffusers[k].country){
+                   //console.log(localStorage.getItem('user_country'),$scope.ffusers[k].country)
+                   delete $scope.ffusers[k];
+               }  
+          });   
+    }
       $scope.groups = $localStorage.getItem('moodle_groups');
       $scope.courses = $localStorage.getItem('moodle_courses');
       if($scope.groups.length===0){
@@ -68,6 +86,15 @@ angular.module('offlineGroupController', ['offlineData', 'localStorage'])
             ffuser[k].fullname=ffuser[k].firstname+' '+ffuser[k].lastname;
           });
           $scope.fusers=ffuser;
+            if(localStorage.getItem('moodle_role')==4){
+                angular.forEach($scope.ffusers, function(v, k){
+                      //console.log($scope.ffusers[k]);
+                       if(localStorage.getItem('user_country')!=$scope.ffusers[k].country){
+                           //console.log(localStorage.getItem('user_country'),$scope.ffusers[k].country)
+                           delete $scope.ffusers[k];
+                       }  
+                  });   
+            }
           $localStorage.setObject('moodle_users',ffuser);
         });
       }
@@ -174,22 +201,51 @@ angular.module('offlineGroupController', ['offlineData', 'localStorage'])
         c.status=1;
         var users=g.users;
         var k=users.indexOf(u);
-        console.log('status='+g.status);
-        if(g.status===1){
-          users.splice(k,1);
+          
+          
+        if(localStorage.getItem('moodle_role')==4){
+            if(u.country == $scope.countryCode){
+                console.log('status='+g.status);
+                if(g.status===1){
+                  users.splice(k,1);
+                }else{
+                  u.status=3;
+                  users.splice(k,1,u);
+                  g.status=2;
+                }
+                g.users=users;
+                groups.splice(inx,1,g);
+
+                c.groups=groups;
+                courses.splice(index,1,c);
+
+                $localStorage.setObject('moodle_groups',courses);
+                $scope.groups=courses;
+            }else{
+                $ionicPopup.alert({
+                     title: 'Alert',
+                     template: 'Not permitted'
+                   });
+            }            
         }else{
-          u.status=3;
-          users.splice(k,1,u);
-          g.status=2;
-        }
-        g.users=users;
-        groups.splice(inx,1,g);
+            console.log('status='+g.status);
+            if(g.status===1){
+              users.splice(k,1);
+            }else{
+              u.status=3;
+              users.splice(k,1,u);
+              g.status=2;
+            }
+            g.users=users;
+            groups.splice(inx,1,g);
 
-        c.groups=groups;
-        courses.splice(index,1,c);
+            c.groups=groups;
+            courses.splice(index,1,c);
 
-        $localStorage.setObject('moodle_groups',courses);
-        $scope.groups=courses;
+            $localStorage.setObject('moodle_groups',courses);
+            $scope.groups=courses;      
+            }  
+          
       })
 
     };
@@ -236,7 +292,7 @@ angular.module('offlineGroupController', ['offlineData', 'localStorage'])
 
     $scope.show_users=function (c, g) {
         
-      if(localStorage.getItem(moodle_role) == 5){
+      if(localStorage.getItem('moodle_role') == 5){
           for(i=0;i<g.users.length;i++){
               if(g.user[i].country != localStorage.getItem("user_country")){
                   g.user.splice(i,1);

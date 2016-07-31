@@ -13,9 +13,9 @@
         <div class="input-label">
           Country
         </div>
-        <select ng-model ="countryCode">
+        <select ng-disabled="haveNoRights()" ng-model ="countryCode">
           <option></option>
-          <option ng:repeat="country in countries | orderBy :'name'" value="{{country.code}}" ng-selected="country.code==='AU'">
+          <option ng:repeat="country in countries | orderBy :'name'" value="{{country.code}}" ng-selected="country.code==countryCode">
             {{country.name}}
           </option>
         </select>

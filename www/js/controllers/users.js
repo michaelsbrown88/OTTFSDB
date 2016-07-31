@@ -19,9 +19,17 @@ angular.module('usersController', ['moodleData', 'localStorage'])
       $scope.countries = $moodleData.country_list();
       console.log($scope.countries);
       $scope.country={};
-      $scope.countryCode='AUS';
+      $scope.countryCode=localStorage.getItem('user_country');
 
     });
+    
+    $scope.haveNoRights = function(){
+        if(localStorage.getItem('moodle_role')==4){
+            return true;
+        }else{
+            return false;
+        }
+    };
 
     $scope.showLoader = function() {
       $ionicLoading.show({

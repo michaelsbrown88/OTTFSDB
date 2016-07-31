@@ -4,7 +4,7 @@ angular.module('offlineUsersController', ['moodleData', 'localStorage'])
     $scope.$on('$ionicView.afterEnter', function() {
       // fetch initial view data
       $scope.countries = $moodleData.country_list();
-      $scope.countryCode='AU';
+      $scope.countryCode=localStorage.getItem('user_country');
       fetchData();
     });
 
@@ -21,7 +21,16 @@ angular.module('offlineUsersController', ['moodleData', 'localStorage'])
     $scope.doRefresh = function(){
       // fetchData();
     };
-
+    
+    
+    $scope.haveNoRights = function(){
+        if(localStorage.getItem('moodle_role')==4){
+            return true;
+        }else{
+            return false;
+        }
+    };
+    
     $scope.edit = function(user){
       $state.go('offline.edituser', {id: user.id});
     };
