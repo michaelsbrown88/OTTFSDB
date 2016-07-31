@@ -17,7 +17,7 @@ angular.module('usersController', ['moodleData', 'localStorage'])
       //   $scope.users = $localStorage.getObject('moodle_users');
       // }
       $scope.countries = $moodleData.country_list();
-      console.log($scope.countries);
+
       $scope.country={};
       $scope.countryCode=localStorage.getItem('user_country');
 

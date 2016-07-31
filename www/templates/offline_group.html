@@ -9,12 +9,16 @@
   </ion-nav-buttons>
 
   <ion-content class="offline-group">
+    <label class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="text" placeholder="Search" ng-model="searchString">
+    </label>
     <ion-list class="list">
       <div class="card" ng-repeat="css in groups" style="margin:10px;">
         <ion-item class="item " style="background-color: #8bc6e9;color:#fff;">
           {{css.course_name}}
         </ion-item>
-        <div class="" ng-repeat="gp in css.groups | filter:myFilter">
+        <div class="" ng-repeat="gp in css.groups | filter:myFilter | filter: {group_name: searchString}">
           <ion-item class="item" ng-click="show_users(css,gp)" ng-class="isSelection(css,gp)?'sactive':''" >
             <h2>Group : {{gp.group_name}}</h2>
           </ion-item>
