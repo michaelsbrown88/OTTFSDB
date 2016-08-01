@@ -1,5 +1,5 @@
 angular.module('appController', ['localStorage'])
-  .controller('AppCtrl', function($scope, $state, $localStorage) {
+  .controller('AppCtrl', function($scope, $state, $localStorage,$location) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -8,6 +8,13 @@ angular.module('appController', ['localStorage'])
     //$scope.$on('$ionicView.enter', function(e) {
     //
     //});
+       if(localStorage.getItem('moodle_role')==5){
+        
+           $scope.get_url = '#/app/activity';
+           
+       } else{
+           $scope.get_url = '#/offline/users';
+       }
     
     
     $scope.showMenu = function(arr){
@@ -18,6 +25,11 @@ angular.module('appController', ['localStorage'])
             }
         }
         return match;
+    };
+    
+
+    $scope.clearLogin = function(){
+        localStorage.clear();  
     };
 
     $scope.draftUserCount = function(){

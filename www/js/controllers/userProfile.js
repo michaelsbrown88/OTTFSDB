@@ -1,45 +1,81 @@
 angular.module('userProfileController', ['localStorage', 'moodleData'])
-  .controller('UserProfileCtrl', function($scope, $stateParams, $localStorage, $moodleData,$cordovaCamera,$cordovaFileTransfer,$state,$offlineData,$http,$location,$rootScope){
+  .controller('UserProfileCtrl', function($scope, $stateParams, $localStorage, $moodleData,$cordovaCamera,$cordovaFileTransfer,$state,$offlineData,$http,$location,$rootScope,$cordovaImagePicker,$ionicModal){
+    
+      $scope.fromCamera = true;
+    
+      $ionicModal.fromTemplateUrl('templates/selectPhoto.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+      }).then(function(modal) {
+        $scope.modal = modal;
+      });
 
-    $scope.uploadPic =  function(){
-
-        var options = {
-          destinationType: Camera.DestinationType.FILE_URI,
-          sourceType: Camera.PictureSourceType.CAMERA,
-        };
-
-        $cordovaCamera.getPicture(options).then(function(imageURI) {
-          var temp = imageURI.split("/");
-          var filename = temp[temp.length - 1];
-          
-          var myImage = document.getElementById('myImage');
-          myImage.src = imageURI;
-            
-          var options = {
-                 fileKey: "file",
-                 fileName: filename,
-                 chunkedMode: false,
-                 mimeType: "image/jpg",
-                 params : {'user':$scope.user.id}
-             };
-
-          $cordovaFileTransfer.upload("https://learning.ittfoceania.com/webservice/tg_pic_upload.php",imageURI , options,true)
-              .then(function(result) {
-
-              }, function(err) {
-                console.log(err);
-              }, function (progress) {
-                // constant progress updates
-              });  
-        
-            
-            
-            
-        }, function(err) {
-          // error
-        });
-
+    
+    $scope.setCamera = function(value){
+        console.log(value);
+        $scope.fromCamera = value;
+        $scope.modal.hide();
+        takePic();
     };
+    
+    $scope.uploadPic =  function(){
+        $scope.modal.show();     
+    };
+    
+    function takePic(){
+        if($scope.fromCamera){    
+            var options = {
+              destinationType: Camera.DestinationType.FILE_URI,
+              sourceType: Camera.PictureSourceType.CAMERA,
+            };
+
+            $cordovaCamera.getPicture(options).then(function(imageURI) {
+                uploadImage(imageURI);
+
+            }, function(err) {
+               console.log(err);
+            });
+            
+        }else{
+          var options = {
+           maximumImagesCount: 1
+          };
+
+          $cordovaImagePicker.getPictures(options)
+            .then(function (results) {
+             
+                uploadImage(results[0]);
+            }, function(error) {
+              // error getting photos
+            });
+        }        
+    }
+    
+    function uploadImage(imageURI){
+      var temp = imageURI.split("/");
+      var filename = temp[temp.length - 1];
+
+      var myImage = document.getElementById('myImage');
+      myImage.src = imageURI;
+
+      var options = {
+             fileKey: "file",
+             fileName: filename,
+             chunkedMode: false,
+             mimeType: "image/jpg",
+             params : {'user':$scope.user.id}
+         };
+      console.log(imageURI);
+        console.log(filename);
+      $cordovaFileTransfer.upload("https://learning.ittfoceania.com/webservice/tg_pic_upload.php",imageURI , options,true)
+          .then(function(result) {
+
+          }, function(err) {
+            console.log(err);
+          }, function (progress) {
+            // constant progress updates
+          });          
+    }
     
     $scope.census= function(){
         $rootScope.chk = true;

@@ -37,6 +37,17 @@ angular.module('activityControl', ['offlineData', 'localStorage'])
 
     $scope.read_groups=function(){
       $scope.fusers = $localStorage.getItem('offlineUsers');
+        
+            if(localStorage.getItem('moodle_role')==4 || localStorage.getItem('moodle_role')==5){
+                angular.forEach($scope.fusers, function(v, k){
+              //console.log($scope.ffusers[k]);
+                   if(localStorage.getItem('user_country')!=$scope.fusers[k].country){
+                       //console.log(localStorage.getItem('user_country'),$scope.ffusers[k].country)
+                       delete $scope.fusers[k];
+                   }  
+                });   
+            }  
+              
       $scope.group_trackers=$localStorage.getItem('group_trackers');
       $scope.user_trackers=$localStorage.getItem('user_trackers');
       if($scope.group_trackers.length===0){
@@ -62,6 +73,7 @@ angular.module('activityControl', ['offlineData', 'localStorage'])
               ffuser[k].fullname=ffuser[k].firstname+' '+ffuser[k].lastname;
             });
             $scope.fusers=ffuser;
+            
             $localStorage.setObject('offlineUsers',res.data);
 
             $scope.user_trackers=$scope.fusers;

@@ -41,7 +41,7 @@ angular.module('newUserController', ['moodleData', 'localStorage'])
     };
     
     $scope.check_username = function(){
-      $http.get("https://learning.ittfoceania.com/webservice/tg_check_username.php?username=" + $scope.user.firstname)
+      $http.get("https://learning.ittfoceania.com/webservice/tg_check_username.php?username=" + $scope.user.firstname + $scope.user.lastname)
       .then(function(response){
             $scope.user.username = response.data.username[0].value.toLowerCase();  
       });  
