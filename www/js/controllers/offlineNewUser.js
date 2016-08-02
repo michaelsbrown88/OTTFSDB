@@ -1,5 +1,5 @@
 angular.module('offlineNewUserController', ['moodleData', 'localStorage'])
-  .controller('OfflineNewUserCtrl', function($scope, $state, $moodleData, $localStorage, $ionicPopup, $ionicHistory){
+  .controller('OfflineNewUserCtrl', function($scope, $state, $moodleData, $localStorage, $ionicPopup, $ionicHistory, $http){
     $scope.countryCode=localStorage.getItem('user_country');
     $scope.$on('$ionicView.afterEnter', function(){
       $scope.countries = $moodleData.country_list();
@@ -33,6 +33,13 @@ angular.module('offlineNewUserController', ['moodleData', 'localStorage'])
         }else{
             return false;
         }
+    };
+    
+       $scope.check_username = function(){
+      $http.get("https://learning.ittfoceania.com/webservice/tg_check_username.php?username=" + $scope.user.firstname + $scope.user.lastname)
+      .then(function(response){
+            $scope.user.username = response.data.username[0].value.toLowerCase();  
+      });  
     };
     
     $scope.save = function(){

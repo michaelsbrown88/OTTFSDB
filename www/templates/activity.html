@@ -33,12 +33,12 @@
 
     <ion-list class="list" ng-show="layout==='group'">
       <div class="card" ng-repeat="css in group_trackers" style="margin:10px;">
-        <ion-item class="item item-divider" style="padding-top:5px;background-color: #4da7dc;color:#fff;">
+        <ion-item class="item item-divider" style="padding:5px;background-color: #4da7dc;color:#fff;">
           {{css.course_name}}
-          <!--<ion-option-button ng-click="go_group_tracker(group)">Tracker</ion-option-button>-->
+          
         </ion-item>
         <div class="" ng-repeat="gp in css.groups" ng-class="{'active':isActive(gp)}">
-          <ion-item class="item" ng-click="add_acts(css,gp)" style="background-color: transparent;">
+          <ion-item class="item" ng-clic="add_acts(css,gp)" style="background-color: transparent; padding:5px;">
             <h2>Group : {{gp.group_name}}</h2>
           </ion-item>
           <ion-item class="item" style="background: #efefef;" ng-repeat="act in gp.acts | filter:myFilter" ng-show="gp===selection.group" style="background-color: #4d4d4d;color:#fff;">
@@ -89,12 +89,17 @@
     </ion-list>
   </ion-content>
 
-  <ion-footer-bar align-title="center" class="bar-light offline-footer">
-    <div class="button-bar">
-      <button class="button button-royal left-button" ng-class="{active:layout==='group'}" ng-click="set_layout('group')">Groups</button>
-      <button class="button button-dark right-button" ng-class="{active:layout==='user'}" ng-click="set_layout('user')">Individuals</button>
+<ion-footer-bar align-title="center" class="bar-light offline-footer" style="padding:0;">
+    <div class="row" style="padding: 0;">
+      <div class="col col-50">
+        <button class="button button-positive" ng-class="{active:layout==='group'}" ng-click="set_layout('group')" style="width:100%;min-height:100%;line-height: 100%;">Groups</button>
+      </div>
+      <div class="col col-50">
+        <button class="button button-dark" ng-class="{active:layout==='user'}" ng-click="set_layout('user')" style="width:100%;min-height:100%;line-height: 100%;">Individuals</button>
+      </div>
     </div>
+
   </ion-footer-bar>
 
-</ion-view>
 
+</ion-view>

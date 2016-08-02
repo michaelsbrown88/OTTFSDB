@@ -12,13 +12,16 @@
     </label>
     <ion-list class="list">
       <div class="card" ng-repeat="css in ggroups" style="margin:10px;">
-        <ion-item class="item " style="background-color: #4da7dc;color:#fff;">
+        
+          <ion-item class="item " style="background-color: #4da7dc;color:#fff; padding:5px;">
           {{css.course_name}}
         </ion-item>
-        <div class="" ng-repeat="gp in css.groups | filter:myFilter | filter: {group_name: searchString}">
-          <ion-item class="item" ng-click="show_users(css,gp)" ng-class="isSelection(css,gp)?'sactive':''" >
+        
+          <div class="" ng-repeat="gp in css.groups | filter:myFilter | filter: {group_name: searchString}">
+          <ion-item style="padding:5px;" class="item" ng-click="show_users(css,gp)" ng-class="isSelection(css,gp)?'sactive':''" >
             <h2>Group : {{gp.group_name}}</h2>
           </ion-item>
+            
           <ion-item class="item item-thumbnail-left add-user-item" style="background-color: #efefef;" href="#" ng-repeat="user in gp.users | filter:myFilter" ng-show="isShown(css,gp)">
             <img ng-src="https://learning.ittfoceania.com/webservice/pluginfile.php/4/user/icon/f1?token=1458781b25583a0dffb66af711411000">
             <h2>{{user.firstname}} {{user.lastname}}</h2>
@@ -35,7 +38,7 @@
   <ion-footer-bar align-title="center" class="bar-light offline-footer" style="padding:0;">
     <div class="row" style="padding: 0;">
       <div class="col col-50">
-        <button class="button button-royal" ng-disabled="!selection.group" ng-click="add_user()" style="width:100%;min-height:100%;line-height: 100%;">Add Users</button>
+        <button class="button button-positive" ng-disabled="!selection.group" ng-click="add_user()" style="width:100%;min-height:100%;line-height: 100%;">Add Users</button>
       </div>
       <div class="col col-50">
         <button class="button button-dark" ng-disabled="!selection.group" ng-click="delete_group()" style="width:100%;min-height:100%;line-height: 100%;">Delete Group</button>
@@ -45,4 +48,3 @@
   </ion-footer-bar>
 
 </ion-view>
-

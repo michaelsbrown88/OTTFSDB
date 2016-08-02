@@ -1,5 +1,6 @@
 <ion-view view-title="Edit User" class="edit-user-view" ng-controller="EditUserCtrl">
   <ion-content>
+      
     <div class="list">
       <label class="item item-input item-stacked-label">
         <span class="input-label">First Name</span>
@@ -65,12 +66,15 @@
       </label>
 
       <div class="padding">
-        <button class="button button-block button-royal" ng-click="save()">
+          <button class="button button-clear button-positive" style="display:block; margin:0 auto;" ng-click="census()">Edit Health Questions</button>
+          <button class="button button-block button-positive" style="margin-top:0px;" ng-click="save()">
           Save Changes
         </button>
         <button class="button button-block button-dark" ng-click="cancel()">
           Cancel
         </button>
+          
+          
       </div>
 
     </div>

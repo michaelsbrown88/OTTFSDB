@@ -1,11 +1,17 @@
 angular.module('editUserController', ['moodleData', 'localStorage'])
-  .controller('EditUserCtrl', function($scope, $state, $stateParams, $moodleData, $localStorage, $ionicLoading, $ionicPopup, $ionicViewService,$offlineData){
+  .controller('EditUserCtrl', function($scope, $state, $stateParams, $moodleData, $localStorage, $ionicLoading, $ionicPopup, $ionicViewService,$offlineData, $location, $rootScope){
  
+     $scope.census= function(){
+        $rootScope.chk = true;
+        $location.path('/app/questionnaire');  
+    };
+    
     
     $scope.$on('$ionicView.beforeEnter', function() {
       // authorize
       $moodleData.authorize();
     });
+    
 
     $scope.$on('$ionicView.afterEnter', function(){
       $scope.user={};
