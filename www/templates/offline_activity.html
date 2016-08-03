@@ -33,14 +33,14 @@
 
     <ion-list class="list" ng-show="layout==='group'">
       <div class="card" ng-repeat="css in group_trackers | filter:myFilter" style="margin:10px;">
-        <ion-item class="item" style="padding:5px; background-color: #8bc6e9; color:#fff;">
+        <ion-item class="item" style="padding:10px; background-color: #8bc6e9; color:#fff;">
           {{css.course_name}}
         </ion-item>
         <div class="" ng-repeat="gp in css.groups" ng-class="{'active':isActive(gp)}">
-          <ion-item class="item" style="padding:5px;" ng-click="add_acts(css,gp)" style="background-color: transparent;">
+          <ion-item class="item" style="padding:9px;" ng-click="add_acts(css,gp)" style="background-color: transparent;">
             <h2>Group : {{gp.group_name}}</h2>
           </ion-item>
-          <ion-item class="item" ng-repeat="act in gp.acts  | filter:myFilter" ng-show="gp===selection.group" style="background-color: #efefef;color:#000;">
+          <ion-item class="item" ng-repeat="act in gp.acts  | filter:myFilter" ng-show="gp===selection.group" style="background-color: #efefef;color:#000; ">
             <div class="row">
               <div class="col col-60">
                 {{act.date | date:'yyyy-MM-dd'}}
@@ -87,13 +87,27 @@
 
     </ion-list>
   </ion-content>
+    
+   <ion-footer-bar align-title="center" class="bar-light offline-footer" style="padding:0;">
+    <div class="row" style="padding: 0;">
+      <div class="col col-50">
+        <button class="button button-royal" ng-click="set_layout('group')" style="width:100%;min-height:100%;line-height: 100%;" ng-class="{active:layout==='group'}">Groups</button>
+      </div>
+      <div class="col col-50">
+        <button class="button button-dark" ng-click="set_layout('user')" ng-class="{active:layout==='user'}" style="width:100%;min-height:100%;line-height: 100%;">Individuals</button>
+      </div>
+    </div>
 
-  <ion-footer-bar align-title="center" class="bar-light offline-footer">
+  </ion-footer-bar>
+</ion-view>
+
+
+
+  <!--<ion-footer-bar align-title="center" class="bar-light offline-footer">
     <div class="button-bar">
       <button class="button button-royal left-button" ng-class="{active:layout==='group'}" ng-click="set_layout('group')">Groups</button>
       <button class="button button-dark right-button" ng-class="{active:layout==='user'}" ng-click="set_layout('user')">Individuals</button>
     </div>
   </ion-footer-bar>
 
-</ion-view>
-
+</ion-view> -->
