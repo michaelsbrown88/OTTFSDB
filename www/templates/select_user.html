@@ -44,20 +44,14 @@
     </ion-list>
 
   </ion-content>
-<!--  <ion-footer-bar>
-    <div class="button-bar">
-      <button class="button left-button button-positive" ng-click="add_users()">Confirm</button>
-      <button class="button right-button button-dark" ng-click="hide_select_user_modal()">Cancel</button>
-    </div>
-  </ion-footer-bar>-->
-    
+
    <ion-footer-bar align-title="center" class="bar-light offline-footer" style="padding:0;">
     <div class="row" style="padding: 0;">
       <div class="col col-50">
         <button class="button button-positive" ng-click="add_users()" style="width:100%;min-height:100%;line-height: 100%;">Confirm</button>
       </div>
       <div class="col col-50">
-        <button class="button button-dark" ng-disabled="!selection.group" ng-click="hide_select_user_modal()" style="width:100%;min-height:100%;line-height: 100%;">Cancel</button>
+        <button class="button button-dark" ng-click="hide_select_user_modal()" style="width:100%;min-height:100%;line-height: 100%;">Cancel</button>
       </div>
     </div>
 
