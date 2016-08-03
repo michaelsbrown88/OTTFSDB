@@ -13,11 +13,12 @@ angular.module('newUserController', ['moodleData', 'localStorage'])
         firstname: "",
         lastname: "",
         username: "",
-        password: "",
+        password: "Secur3$$",
         email: "",
-        country: "",
+        country: localStorage.getItem('user_country'),
         gender: ""
-      }
+      };
+        
     });
 
     $scope.cancel = function(){
@@ -30,7 +31,7 @@ angular.module('newUserController', ['moodleData', 'localStorage'])
         template: message
       });
     };
-    
+
     
     $scope.haveNoRights = function(){
         if(localStorage.getItem('moodle_role')==4){
@@ -41,7 +42,7 @@ angular.module('newUserController', ['moodleData', 'localStorage'])
     };
     
     $scope.check_username = function(){
-      $http.get("https://learning.ittfoceania.com/webservice/tg_check_username.php?username=" + $scope.user.firstname + $scope.user.lastname)
+      $http.get("https://learning.ittfoceania.com/webservice/tg_check_username.php?username=" + $scope.user.firstname.substr(0, 1) + $scope.user.lastname)
       .then(function(response){
             $scope.user.username = response.data.username[0].value.toLowerCase();  
       });  

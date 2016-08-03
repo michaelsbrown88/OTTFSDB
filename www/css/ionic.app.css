@@ -5680,7 +5680,7 @@ ion-tabs.tabs-color-active-dark .tab-item {
   display: block;
   margin: -1px;
   padding: 16px;
-  border-width: 0px;
+  border-width: 1px;
   border-style: solid;
   font-size: 16px; }
   .item h2 {

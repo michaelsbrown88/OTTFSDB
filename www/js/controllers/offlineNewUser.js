@@ -8,9 +8,9 @@ angular.module('offlineNewUserController', ['moodleData', 'localStorage'])
         firstname: "",
         lastname: "",
         username: "",
-        password: "",
+        password: "Secur3$$",
         email: "",
-        country: "",
+        country: localStorage.getItem('user_country'),
         status:1,
         customfields: [{},{value: ""}]
       }
@@ -35,11 +35,9 @@ angular.module('offlineNewUserController', ['moodleData', 'localStorage'])
         }
     };
     
-       $scope.check_username = function(){
-      $http.get("https://learning.ittfoceania.com/webservice/tg_check_username.php?username=" + $scope.user.firstname + $scope.user.lastname)
-      .then(function(response){
-            $scope.user.username = response.data.username[0].value.toLowerCase();  
-      });  
+    $scope.check_username = function(){
+        var str = $scope.user.firstname.substr(0,1) + $scope.user.lastname;
+        $scope.user.username =str.toLowerCase()
     };
     
     $scope.save = function(){

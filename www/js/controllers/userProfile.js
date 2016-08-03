@@ -17,6 +17,9 @@ angular.module('userProfileController', ['localStorage', 'moodleData'])
         $scope.modal.hide();
         takePic();
     };
+    $scope.modalClose = function(){
+        $scope.modal.hide();
+    };
     
     $scope.uploadPic =  function(){
         $scope.modal.show();     
