@@ -94,8 +94,9 @@ angular.module('userProfileController', ['localStorage', 'moodleData'])
                 user_id = offUsers[i].id;
             }
         }
-        
+         $rootScope.my_profile= "yes";
         $state.go("app.edituser", {id:user_id});
+       
     };
     
     $scope.$on('$ionicView.beforeEnter', function() {
@@ -118,6 +119,14 @@ angular.module('userProfileController', ['localStorage', 'moodleData'])
 
 
     function fetchData(){
+        $http.get("https://learning.ittfoceania.com/webservice/tg_user_hours.php?username=" + localStorage.getItem('ottfUsername')).then(function(response){
+            if( response.data.activity.length == 0){
+                $scope.act_hours = 0;
+            }else{
+                $scope.act_hours =  response.data.activity[0].hours;
+            }
+             
+        });
       $scope.user = null;
       if($stateParams.id){
         var users=$localStorage.getItem('moodle_users');

@@ -36,7 +36,15 @@ angular.module('editUserController', ['moodleData', 'localStorage'])
     };
 
     $scope.cancel = function(){
-      $state.go('app.users');
+        
+      if($rootScope.my_profile == "yes"){
+          $rootScope.my_profile = "no";
+          $state.go('app.home');
+      }
+      else{
+          $state.go('app.users');
+      }
+      
     };
 
     $scope.showAlert = function(message){

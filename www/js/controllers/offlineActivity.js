@@ -172,6 +172,7 @@ angular.module('offlineActivityControl', ['offlineData', 'localStorage'])
         $scope.selection.group.acts.push(att);
         $scope.selection.course.groups.splice(inx,1,$scope.selection.group);
         $scope.group_trackers.splice(index,1,$scope.selection.course);
+        console.log($scope.group_trackers);
         $localStorage.setObject('moodle_groups',$scope.group_trackers);
         $scope.hide_omodal();
       }else{
@@ -187,6 +188,7 @@ angular.module('offlineActivityControl', ['offlineData', 'localStorage'])
         var att={id:'--',date:$scope.omodal.date,minutes:$scope.omodal.minute,course_id:$scope.omodal.course,course_name:fullname,status:1};
         $scope.selection.user.acts.push(att);
         $scope.user_trackers.splice(index,1,$scope.selection.user);
+        console.log($scope.user_trackers);
         $localStorage.setObject('moodle_users',$scope.user_trackers);
         $scope.hide_omodal();
 

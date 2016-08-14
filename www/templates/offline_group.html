@@ -24,8 +24,6 @@
           </ion-item>
           <ion-item class="item item-thumbnail-left add-user-item" style="background-color: #efefef;" href="#"  ng-if="user.roleid == undefined || user.roleid>user_role" ng-repeat="user in gp.users | filter:myFilter" ng-show="isShown(css,gp)">
             <img ng-src="img/user.png" />
-              
-            {{user.roleid}}
             <h2>{{user.firstname}} {{user.lastname}}</h2>
             <p>{{user.username}}</p>
             <ion-option-button class="button-dark" ng-click="delete_user(css,gp,user)">

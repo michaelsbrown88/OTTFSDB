@@ -191,13 +191,15 @@ angular.module('uploadController', ['moodleData', 'localStorage'])
           }
           angular.forEach(vv.acts,function(vvv,kkk,arrr){
             if(vvv.status!==0){
-              console.log('group='+JSON.stringify(v));
+
+                
               activity_length++;
             }
           });
         });
 
       });
+    
 
       angular.forEach($scope.fusers, function(tra, i){
         if(tra.status!==0)user_length++;
@@ -212,6 +214,8 @@ angular.module('uploadController', ['moodleData', 'localStorage'])
       $scope.length.activity=activity_length;
       return callback();
     }
+    
+    
 
     $scope.removeGroup = function(group){
       var course=$scope.selection.course;
@@ -504,4 +508,126 @@ angular.module('uploadController', ['moodleData', 'localStorage'])
     $scope.hideLoader = function(){
       $ionicLoading.hide();
     };
+    
+    
+    $scope.upload_all = function(){
+      $scope.fusers = $localStorage.getItem('moodle_users');
+      $scope.groups = $localStorage.getItem('moodle_groups');
+      $scope.courses = $localStorage.getItem('moodle_courses');
+      var user_length=0;
+      var group_length=0;
+      var activity_length=0;
+
+      var courses=$scope.groups;
+      // course-group-activity(user)
+      angular.forEach(courses, function(v, k,ar){
+        var groups=v.groups;
+        angular.forEach(groups, function(vv, kk,arr){
+          if(vv.status!==0 && vv.status!==5){
+            $scope.uploadAllGroup(v,vv);
+          }
+          angular.forEach(vv.acts,function(vvv,kkk,arrr){
+            if(vvv.status!==0){
+              //console.log('group='+JSON.stringify(v));
+              $scope.uploadActivity(v,vv,vvv);
+            }
+          });
+        });
+
+      });
+    
+
+      angular.forEach($scope.fusers, function(tra, i){
+        if(tra.status!==0){
+            $scope.uploadUser(tra);
+        }
+            
+
+        angular.forEach(tra.acts,function (act, ii) {
+          if(act.status!=0){
+            $scope.uploadUserAct(tra,act);
+          }
+        });
+      });
+      fetchData();
+    }
+    
+    
+    $scope.uploadAllGroup = function(course,group){
+      $scope.showLoader();
+      var groupid = group.id;
+      //edit group
+      if(group.status == 2){
+        // set id to existing user's id for update
+        var uuuu=group.users;
+        var del_users=[];
+        angular.forEach(uuuu,function (fff, iii, rrr) {
+          if(fff.status===3){
+            fff.id=fff.uid;
+            del_users.push(fff);
+            group.users.splice(iii,1);
+          }
+        });
+        if(del_users.length>0){
+          $offlineData.del_gusers(group.group_id,del_users,function(re){
+            $offlineData.add_gusers(group.group_id,group.group_name,group.users,function(re){
+              if(re.data==='OK') fetchEditData(group);
+            });
+          });
+        }else{
+          $offlineData.add_gusers(group.group_id,group.group_name,group.users,function(re){
+            if(re.data==='OK') fetchEditData(group);
+          });
+        }
+      }
+      // new group
+      if(group.status == 1){
+        $offlineData.add_group(group.group_name,function(re){
+          group.gid=re.data[0].group_id;
+          group.group_id=re.data[0].group_id;
+          $offlineData.course_add_group(course.course_id,group.gid,'--',function (res) {
+            $scope.newAllGroup(course,group);
+          })
+          // fetchData();
+        });
+      }
+
+      //delete group
+      if(group.status == 3){
+
+      
+            $offlineData.delete_group(group.group_id,function(re){
+              $scope.removeGroup(group);
+              // fetchData();
+            });
+        
+
+      }
+    }; 
+    
+    $scope.newAllGroup = function(course,group){
+      var index=$scope.groups.indexOf(course);
+      var groups=course.groups;
+      var inx=groups.indexOf(group);
+
+      var acts=group.acts;
+      var fflag=true;
+      angular.forEach(acts,function (ddd, iii, rrr) {
+        if(ddd.status!==0){
+          fflag=false;
+        }
+      });
+      if(fflag){
+        group.status=0;
+        course.status=0;
+      }else{
+        group.status=5;
+      }
+      groups.splice(inx, 1,group);
+      course.groups=groups;
+      $scope.groups.splice(index,1,course);
+      // store the updated users array
+      $localStorage.setObject('moodle_groups', $scope.groups);
+    };
+    
   });
