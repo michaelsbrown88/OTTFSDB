@@ -5,6 +5,7 @@ angular.module('offlineUsersController', ['moodleData', 'localStorage'])
       // fetch initial view data
       $scope.countries = $moodleData.country_list();
       $scope.countryCode=localStorage.getItem('user_country');
+      $scope.user_role=localStorage.getItem('moodle_role');
       fetchData();
     });
 

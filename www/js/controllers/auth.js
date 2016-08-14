@@ -8,7 +8,6 @@ angular.module('authController', ['localStorage', 'moodleData'])
       // // reset login form
       $scope.user = {};
       var username=$localStorage.getItem('ottfUsername');
-      console.log('uuuu='+username);
       if(username && username.length>0){
         $scope.user.username=username;        
       }else{
@@ -61,6 +60,7 @@ angular.module('authController', ['localStorage', 'moodleData'])
             $localStorage.setObject('countries',response.data.countries);  
         });
       }
+
       $scope.showLoader();
 
       var req = {

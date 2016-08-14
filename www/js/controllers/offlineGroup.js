@@ -9,6 +9,8 @@ angular.module('offlineGroupController', ['offlineData', 'localStorage'])
       // fetch initial view data
 
       $scope.countryCode=localStorage.getItem('user_country');
+      $scope.user_role=localStorage.getItem('moodle_role');
+      $scope.token=localStorage.getItem('ottfToken'); 
       $scope.groups=[];
       $scope.fusers=[];
 
@@ -289,7 +291,30 @@ angular.module('offlineGroupController', ['offlineData', 'localStorage'])
         $scope.hide_select_user_modal();
       });
     };
+    function get_role(username){
+        var u = $localStorage.getObject('moodle_users');
+        var val = 0;
+        angular.forEach(u, function(i, j){
+            if(u[j].username == username){
+                val =  u[j].roleid;
+                if(val==null) val=5;
+            }
+        });
+        return val;
 
+    }
+    function get_context(username){
+        var u = $localStorage.getObject('moodle_users');
+        var val =0;
+        angular.forEach(u, function(i, j){
+            if(u[j].username == username){
+               
+                val = u[j].context_id;
+                if(val==null) val=0;
+            }
+        });
+        return val;
+    }  
     $scope.show_users=function (c, g) {
         
       if(localStorage.getItem('moodle_role') == 5){
@@ -322,6 +347,8 @@ angular.module('offlineGroupController', ['offlineData', 'localStorage'])
               angular.forEach(uusers, function(v, k){
                 uusers[k].uid=uusers[k].id;
                 uusers[k].id = k;
+                uusers[k].roleid= get_role(uusers[k].username);
+                uusers[k].context_id= get_context(uusers[k].username);
               });
               gro.users=uusers;
               groups.splice(inx,1,gro);

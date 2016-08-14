@@ -76,7 +76,8 @@ angular.module('offlineData', [])
       get_fusers:function(callback){
         var req={
           method:'POST',
-          url:guserUrl,
+          //url:guserUrl,
+          url:'https://learning.ittfoceania.com/webservice/tg_all_users.php',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
             // 'Content-Type': 'application/json'

@@ -23,7 +23,7 @@
         </div>
         <select ng-disabled="haveNoRights()" ng-model ="countryCode">
           <option></option>
-          <option ng:repeat="country in countries | orderBy :'name'" value="{{country.code}}"  ng-selected="country.code==='AU'">
+          <option ng:repeat="country in countries | orderBy :'name'" value="{{country.code}}"   ng-selected="country.code==countryCode">
             {{country.name}}
           </option>
         </select>
@@ -34,7 +34,7 @@
     <p ng-show="!users" class="text-center">loading...</p>
 
     <ion-list>
-      <ion-item class="item-thumbnail-left" style="border-bottom: 1px solid #666!important;"
+      <ion-item class="item-thumbnail-left" style="border-bottom: 1px solid #666!important;"  ng-if="user.roleid == undefined || user.roleid>user_role" 
                 ng-repeat="user in $parent.filteredUsers = (users | filter: {fullname: searchString, country: countryCode} | filter:myFilter)">
       <!--<ion-item class="item-thumbnail-left" collection-repeat="user in $parent.filteredUsers = (users | filter: {fullname: searchString, country: countryCode})">-->
         <img ng-src="img/user.png" />

@@ -98,7 +98,7 @@ angular.module('ottfApp', [
   'offlineTrackerController',
   'activityControl',
   'groupController',
-    'questionnaireController'
+  'questionnaireController'
 ])
 
   .run(function($ionicPlatform) {

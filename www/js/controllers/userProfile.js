@@ -119,7 +119,6 @@ angular.module('userProfileController', ['localStorage', 'moodleData'])
 
     function fetchData(){
       $scope.user = null;
-
       if($stateParams.id){
         var users=$localStorage.getItem('moodle_users');
         $scope.user=users[$stateParams.id];
