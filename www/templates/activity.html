@@ -37,8 +37,10 @@
           {{css.course_name}}
           
         </ion-item>
-        <div class="" ng-repeat="gp in css.groups" ng-class="{'active':isActive(gp)}">
-          <ion-item class="item" ng-click="add_acts(css,gp)" style="background-color: transparent; padding:9px;">
+        <!--<div class="" ng-repeat="gp in css.groups" ng-class="{'active':isActive(gp)}">
+          <ion-item class="item" ng-click="add_acts(css,gp)" style="background-color: transparent; padding:9px;">-->
+          <div class="" ng-repeat="gp in css.groups">
+          <ion-item style="padding:5px;" class="item" ng-click="add_acts(css,gp)" ng-class="{'active':isActive(gp)}" >
             <h2>Group : {{gp.group_name}} </h2>
           </ion-item>
           <ion-item class="item" style="background: #efefef;" ng-repeat="act in gp.acts | filter:myFilter" ng-show="gp===selection.group" style="background-color: #4d4d4d;color:#fff;">

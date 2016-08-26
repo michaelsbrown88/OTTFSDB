@@ -22,7 +22,7 @@
             <h2>Group : {{gp.group_name}}</h2>
           </ion-item>
             
-          <ion-item class="item item-thumbnail-left add-user-item" style="background-color: #efefef;" href="#" ng-if="user.roleid == undefined || user.roleid>user_role" ng-repeat="user in gp.users | filter:myFilter" ng-show="isShown(css,gp)">
+          <ion-item class="item item-thumbnail-left add-user-item" style="background-color: #efefef;" href="#"  ng-if="checkViewRights(user.roleid,user.country)" ng-repeat="user in gp.users | filter:myFilter" ng-show="isShown(css,gp)">
             <img ng-src="{{'https://learning.ittfoceania.com/webservice/pluginfile.php/' + user.context_id + '/user/icon/f1?token=' + token}}"/>
             
               <h2>{{user.firstname}} {{user.lastname}}</h2>

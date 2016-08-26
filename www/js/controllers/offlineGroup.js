@@ -43,6 +43,39 @@ angular.module('offlineGroupController', ['offlineData', 'localStorage'])
         }
     };
 
+    $scope.checkViewRights = function(roleid,country){
+        if(roleid == undefined || roleid>$scope.user_role){
+            if($scope.countryCode==country){
+                return true;
+            }else{
+                 if($scope.user_role<4){
+                    return true;
+                }else{
+                    return false;
+                }               
+            }
+        }else{
+            return false;
+        }
+    };
+    
+    $scope.checkEditRights = function(roleid,country){
+        if(roleid == undefined || roleid>$scope.user_role){
+            console.log($scope.countryCode,country);
+            if($scope.countryCode==country){
+                return true;
+                
+            }else{
+                 if($scope.user_role<3){
+                    return true;
+                }else{
+                    return false;
+                }               
+            }
+        }else{
+            return false;
+        }
+    };
     $scope.read_groups=function(){
       $scope.fusers = $localStorage.getItem('moodle_users');
         

@@ -34,7 +34,7 @@
     <p ng-show="!users" class="text-center">loading...</p>
 
     <ion-list>
-      <ion-item class="item-thumbnail-left" style="border-bottom: 1px solid #666!important;"  ng-if="user.roleid == undefined || user.roleid>user_role" 
+      <ion-item class="item-thumbnail-left" style="border-bottom: 1px solid #666!important;"   ng-if="checkViewRights(user.roleid,user.country)"
                 ng-repeat="user in $parent.filteredUsers = (users | filter: {fullname: searchString, country: countryCode} | filter:myFilter)">
       <!--<ion-item class="item-thumbnail-left" collection-repeat="user in $parent.filteredUsers = (users | filter: {fullname: searchString, country: countryCode})">-->
         <img ng-src="img/user.png" />
@@ -45,7 +45,7 @@
         <ion-option-button class="button-assertive" ng-click="delete(user)">
           Delete
         </ion-option-button>
-        <ion-option-button class="button-positive" ng-click="edit(user)">
+        <ion-option-button class="button-positive" ng-click="edit(user)"  ng-if="checkEditRights(user.roleid,user.country)">
           Edit
         </ion-option-button>
 

@@ -34,7 +34,7 @@
     <p ng-show="!users" class="text-center">loading...</p>
 
     <ion-list>
-      <ion-item class="item-thumbnail-left" ng-if="user.roleid == undefined || user.roleid>user_role" ng-repeat="user in $parent.filteredUsers = (users | filter: {fullname: searchString, country: countryCode})">
+      <ion-item class="item-thumbnail-left" ng-if="checkViewRights(user.roleid,user.country)" ng-repeat="user in $parent.filteredUsers = (users | filter: {fullname: searchString, country: countryCode})">
         <img ng-src="{{'https://learning.ittfoceania.com/webservice/pluginfile.php/' + user.context_id + '/user/icon/f1?token=' + token}}"/>
           <h2>{{user.fullname}}</h2>
         <p>{{user.username}}</p>
@@ -43,7 +43,7 @@
         <ion-option-button class="button-positive" ng-click="profile(user)">
           Profile
         </ion-option-button>
-        <ion-option-button class="button-energized" ng-click="edit(user)">
+        <ion-option-button class="button-energized" ng-click="edit(user)" ng-if="checkEditRights(user.roleid,user.country)">
           Edit
         </ion-option-button>
       </ion-item>
