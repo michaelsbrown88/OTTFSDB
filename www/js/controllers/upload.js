@@ -520,21 +520,7 @@ angular.module('uploadController', ['moodleData', 'localStorage'])
 
       var courses=$scope.groups;
       // course-group-activity(user)
-      angular.forEach(courses, function(v, k,ar){
-        var groups=v.groups;
-        angular.forEach(groups, function(vv, kk,arr){
-          if(vv.status!==0 && vv.status!==5){
-            $scope.uploadAllGroup(v,vv);
-          }
-          angular.forEach(vv.acts,function(vvv,kkk,arrr){
-            if(vvv.status!==0){
-              //console.log('group='+JSON.stringify(v));
-              $scope.uploadActivity(v,vv,vvv);
-            }
-          });
-        });
-
-      });
+      
     
 
       angular.forEach($scope.fusers, function(tra, i){
@@ -542,13 +528,34 @@ angular.module('uploadController', ['moodleData', 'localStorage'])
             $scope.uploadUser(tra);
         }
             
-
-        angular.forEach(tra.acts,function (act, ii) {
+       angular.forEach(tra.acts,function (act, ii) {
           if(act.status!=0){
             $scope.uploadUserAct(tra,act);
           }
         });
       });
+	
+	setTimeout(function(){  
+	  angular.forEach(courses, function(v, k,ar){
+        var groups=v.groups;
+        angular.forEach(groups, function(vv, kk,arr){
+          if(vv.status!==0 && vv.status!==5){
+            $scope.uploadAllGroup(v,vv);
+          }
+		  
+			  angular.forEach(vv.acts,function(vvv,kkk,arrr){
+				if(vvv.status!==0){
+				  //console.log('group='+JSON.stringify(v));
+				  $scope.uploadActivity(v,vv,vvv);
+				}
+			  });
+		  
+        });
+
+      });
+	},5000);
+	  
+	  
       fetchData();
     }
     
@@ -594,15 +601,11 @@ angular.module('uploadController', ['moodleData', 'localStorage'])
 
       //delete group
       if(group.status == 3){
-
-      
             $offlineData.delete_group(group.group_id,function(re){
               $scope.removeGroup(group);
               // fetchData();
             });
-        
-
-      }
+       }
     }; 
     
     $scope.newAllGroup = function(course,group){

@@ -1,5 +1,5 @@
 <ion-view view-title="Edit User" class="edit-user-view" ng-controller="EditUserCtrl">
-  <ion-content>
+  <ion-content overflow-scroll='true'>
       
     <div class="list">
       <label class="item item-input item-stacked-label">
@@ -64,7 +64,11 @@
           </option>
         </select>
       </label>
-
+    
+     <label>   
+        <ion-checkbox   ng-false-value="0" ng-true-value="1" ng-model="user.smashdownbarriers">Smash Down Barriers</ion-checkbox>
+     </label>
+ 
       <div class="padding">
           <button class="button button-clear button-positive" style="display:block; margin:0 auto;" ng-click="census()">Edit Health Questions</button>
           <button class="button button-block button-positive" style="margin-top:0px;" ng-click="save()">

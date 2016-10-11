@@ -50,7 +50,7 @@ angular.module('authController', ['localStorage', 'moodleData'])
         
       function set_role(username){
         $http.get("https://learning.ittfoceania.com/webservice/tg_user_role.php?username=" + username)
-        .then(function(response){
+        .then(function(response){  
             localStorage.setItem("moodle_role",response.data.role[0].roleid);
         });   
       }
@@ -82,6 +82,7 @@ angular.module('authController', ['localStorage', 'moodleData'])
             set_role($scope.user.username);
             get_countries();
             $scope.user = {};
+			
             $state.go('app.home');
           } else {
             // moodle auth error

@@ -1,5 +1,5 @@
 <ion-view view-title="New Draft User [OFFLINE]" class="offline-new-user-view" ng-controller="OfflineNewUserCtrl">
-  <ion-content>
+  <ion-content overflow-scroll='true'>
     <div class="list">
       <label class="item item-input item-stacked-label">
         <span class="input-label">First Name</span>
@@ -62,6 +62,10 @@
             {{year}}
           </option>
         </select>
+      </label>
+      
+      <label>   
+        <ion-checkbox ng-false-value="0" ng-true-value="1" ng-model="user.smashdownbarriers">Smash Down Barriers</ion-checkbox>
       </label>
 
       <div class="padding">

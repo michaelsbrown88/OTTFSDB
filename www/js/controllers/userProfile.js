@@ -66,17 +66,20 @@ angular.module('userProfileController', ['localStorage', 'moodleData'])
              fileName: filename,
              chunkedMode: false,
              mimeType: "image/jpg",
-             params : {'user':$scope.user.id}
+             params : {'user':$scope.user.id},
+			 headers :{
+                           Connection: "close"
+                         }
          };
       console.log(imageURI);
-        console.log(filename);
+        
       $cordovaFileTransfer.upload("https://learning.ittfoceania.com/webservice/tg_pic_upload.php",imageURI , options,true)
           .then(function(result) {
-
+           //   alert(JSON.stringify(result));
           }, function(err) {
-            console.log(err);
+           //   alert(JSON.stringify(err));
           }, function (progress) {
-            // constant progress updates
+            //  constant progress updates
           });          
     }
     
@@ -90,7 +93,7 @@ angular.module('userProfileController', ['localStorage', 'moodleData'])
       //  console.log($scope.user);
         var user_id = 0;
         var offUsers = $localStorage.getObject('moodle_users');
-        console.log(offUsers);
+       // console.log(offUsers);
         for(i=0;i<offUsers.length;i++){
             if(offUsers[i].uid == $scope.user.id ){
                 user_id = offUsers[i].id;
@@ -143,7 +146,7 @@ angular.module('userProfileController', ['localStorage', 'moodleData'])
       
         
         
-        
+    
         $http.get("https://learning.ittfoceania.com/webservice/tg_user_hours.php?username=" + localStorage.getItem('ottfUsername')).then(function(response){
             if( response.data.activity.length == 0){
                 $scope.act_hours = 0;
@@ -153,6 +156,8 @@ angular.module('userProfileController', ['localStorage', 'moodleData'])
              
         });
       $scope.user = null;
+	  
+	 
       if($stateParams.id){
         var users=$localStorage.getItem('moodle_users');
         $scope.user=users[$stateParams.id];
@@ -172,10 +177,11 @@ angular.module('userProfileController', ['localStorage', 'moodleData'])
             $scope.user.courses = res.data;
             // get grades
             angular.forEach(res.data, function(v,k){
-              $moodleData.get_user_course_grades($scope.user.uid, v.id, function(grade){
+              $moodleData.get_user_course_grades($scope.user.uid, v.id, function(grade){ 
                 if(!grade.data.exception){
                   $scope.user.courses[k].grades = grade.data.items[0].grades[0];
                   $scope.user.totalGrades += grade.data.items[0].grades[0].grade;
+				
                 }
               });
             });
@@ -184,7 +190,7 @@ angular.module('userProfileController', ['localStorage', 'moodleData'])
         console.log($scope.user.courses);
 
       } else {
-    
+   
         // fetch the logged in user
         $moodleData.get_user_by_username($localStorage.get('ottfUsername'), function(res){
           if(res.data.users && res.data.users.length > 0){
@@ -214,6 +220,7 @@ angular.module('userProfileController', ['localStorage', 'moodleData'])
                             $scope.user.courses[k].hours = 0;
                         }else{
                             $scope.user.courses[k].hours = response.data.activity[0].hours;
+							
                         }
 
                     });  
@@ -223,10 +230,9 @@ angular.module('userProfileController', ['localStorage', 'moodleData'])
                 angular.forEach(res.data, function(v,k){
                   $moodleData.get_user_course_grades($scope.user.id, v.id, function(grade){
                     if(!grade.data.exception){
-                      $scope.user.courses[k].grades = grade.data.items[0].grades[0];
-                      
-                      $scope.user.totalGrades += grade.data.items[0].grades[0].grade;
-                    }
+                       $scope.user.courses[k].grades = grade.data.items[0].grades[0];
+                       $scope.user.totalGrades += grade.data.items[0].grades[0].grade;
+					 }
                   });
                 });
               }

@@ -5,7 +5,7 @@
     </button>
   </ion-nav-buttons>
   
-  <ion-content class="offline-group">
+  <ion-content class="offline-group"  overflow-scroll='true'>
     <label class="item item-input">
         <i class="icon ion-search placeholder-icon"></i>
         <input type="text" placeholder="Search" ng-model="searchString">
@@ -13,20 +13,20 @@
     <ion-list class="list">
       <div class="card" ng-repeat="css in ggroups" style="margin:10px;">
         
-          <ion-item class="item " style="background-color: #4da7dc;color:#fff; padding:5px;">
+          <ion-item class="item " style="background-color: #4da7dc;color:#fff; padding:10px;">
           {{css.course_name}}
         </ion-item>
         
           <div class="" ng-repeat="gp in css.groups | filter:myFilter | filter: {group_name: searchString}">
-          <ion-item style="padding:5px;" class="item" ng-click="show_users(css,gp)" ng-class="isSelection(css,gp)?'sactive':''" >
+          <ion-item style="padding:8px;" class="item" ng-click="show_users(css,gp)" ng-class="isSelection(css,gp)?'sactive':''" >
             <h2>Group : {{gp.group_name}}</h2>
           </ion-item>
             
-          <ion-item class="item item-thumbnail-left add-user-item" style="background-color: #efefef;" href="#"  ng-if="checkViewRights(user.roleid,user.country)" ng-repeat="user in gp.users | filter:myFilter" ng-show="isShown(css,gp)">
-            <img ng-src="{{'https://learning.ittfoceania.com/webservice/pluginfile.php/' + user.context_id + '/user/icon/f1?token=' + token}}"/>
-            
+          <ion-item class="item  add-user-item" style="background-color: #efefef;" href="#"  ng-if="checkViewRights(user.roleid,user.country)" ng-repeat="user in gp.users | filter:myFilter" ng-show="isShown(css,gp)">
+          <!--  <img ng-src="{{'https://learning.ittfoceania.com/webservice/pluginfile.php/' + user.context_id + '/user/icon/f1?token=' + token}}"/>
+            -->
               <h2>{{user.firstname}} {{user.lastname}}</h2>
-            <p>{{user.username}}</p>
+           <!-- <p>{{user.username}}</p>-->
             <ion-option-button class="button-dark" ng-click="delete_user(css,gp,user)">
               Remove User
             </ion-option-button>

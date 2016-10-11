@@ -121,6 +121,9 @@ angular.module('ottfApp', [
 
     $ionicConfigProvider.platform.ios.navBar.alignTitle('center');
     $ionicConfigProvider.platform.android.navBar.alignTitle('center');
+	if (ionic.Platform.isAndroid()) {
+      $ionicConfigProvider.scrolling.jsScrolling(false);
+    }
 
     $stateProvider
       .state('signin',{

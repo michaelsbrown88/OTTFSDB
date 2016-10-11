@@ -1,5 +1,5 @@
 <ion-view view-title="New User" class="new-user-view" ng-controller="NewUserCtrl">
-  <ion-content>
+  <ion-content overflow-scroll='true'>
     <div class="list">
       <label class="item item-input item-stacked-label">
         <span class="input-label">First Name</span>
@@ -63,7 +63,11 @@
           </option>
         </select>
       </label>
-
+    
+     <label >   
+        <ion-checkbox ng-false-value="0" ng-true-value="1" ng-model="user.smashdownbarriers">Smash Down Barriers</ion-checkbox>
+     </label>
+     
       <div class="padding">
         <button class="button button-block button-positive" ng-click="save()">
           Save Changes

@@ -8,7 +8,7 @@
     </button>
   </ion-nav-buttons>
 
-  <ion-content class="offline-group">
+  <ion-content class="offline-group"  overflow-scroll='true'>
 
     <div class="list list-inset"  ng-show="layout==='user'">
       <label class="item item-input">
@@ -33,22 +33,22 @@
 
     <ion-list class="list" ng-show="layout==='group'">
       <div class="card" ng-repeat="css in group_trackers" style="margin:10px;">
-        <ion-item class="item item-divider" style="padding:5px;background-color: #4da7dc;color:#fff;">
+        <ion-item class="item item-divider" style="padding:10px;background-color: #4da7dc;color:#fff;">
           {{css.course_name}}
           
         </ion-item>
         <!--<div class="" ng-repeat="gp in css.groups" ng-class="{'active':isActive(gp)}">
           <ion-item class="item" ng-click="add_acts(css,gp)" style="background-color: transparent; padding:9px;">-->
           <div class="" ng-repeat="gp in css.groups">
-          <ion-item style="padding:5px;" class="item" ng-click="add_acts(css,gp)" ng-class="{'active':isActive(gp)}" >
+          <ion-item style="padding:8px;" class="item" ng-click="add_acts(css,gp)" ng-class="{'active':isActive(gp)}" >
             <h2>Group : {{gp.group_name}} </h2>
           </ion-item>
           <ion-item class="item" style="background: #efefef;" ng-repeat="act in gp.acts | filter:myFilter" ng-show="gp===selection.group" style="background-color: #4d4d4d;color:#fff;">
             <div class="row">
-              <div class="col col-60">
+              <div class="col col-40">
                 {{act.date | date:'yyyy-MM-dd'}}
               </div>
-              <div class="col col-40">
+              <div class="col col-60">
                 {{act.minutes}} min
               </div>
             </div>

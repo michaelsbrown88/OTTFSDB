@@ -2,15 +2,15 @@ angular.module('homeController', ['localStorage', 'moodleData'])
   .controller('HomeCtrl', function($scope, $localStorage, $moodleData,$location){
     
 
-    $scope.$on('$ionicView.beforeEnter', function() {
+    $scope.$on('$ionicView.beforeEnter', function() {  
       // authorize
       $moodleData.authorize();
+	  
     });
 
-    $scope.$on('$ionicView.afterEnter', function() {
+    $scope.$on('$ionicView.afterEnter', function() { 
       // fetch initial view data
       fetchData();
-
         
     });
 
@@ -25,7 +25,7 @@ angular.module('homeController', ['localStorage', 'moodleData'])
       $moodleData.get_user_by_username($localStorage.get('ottfUsername'), function(res){
         if(res.data.users.length > 0){
           $scope.user = res.data.users[0];
-          // inject country name
+     
           var countryList = $moodleData.country_list();
           angular.forEach(countryList, function(v,k){
             if($scope.user.country === countryList[k].code){

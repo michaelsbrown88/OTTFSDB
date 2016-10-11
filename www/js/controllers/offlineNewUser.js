@@ -12,6 +12,7 @@ angular.module('offlineNewUserController', ['moodleData', 'localStorage'])
         email: "",
         country: localStorage.getItem('user_country'),
         status:1,
+		smashdownbarriers:'0',
         customfields: [{},{value: ""}]
       }
     });

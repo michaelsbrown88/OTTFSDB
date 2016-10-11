@@ -122,6 +122,22 @@ angular.module('offlineData', [])
         };
         $http(req).then(callback);
       },
+	    edit_gusers:function(gid,gname,users,callback){
+        var req={
+          method:'POST',
+          url:guserUrl,
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          data:{
+            action:'edit',
+            join_group_id:gid,
+            join_group_name:gname,
+            join_users:users
+          }
+        };
+        $http(req).then(callback);
+      },
       get_analydata:function(gender,max,min,country,callback){
         var req={
           method:'POST',
@@ -276,7 +292,7 @@ angular.module('offlineData', [])
           url:courseUrl,
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
-            // 'Content-Type': 'application/json'
+            //'Content-Type': 'application/json'
           },
           data:{
             action:'readactivity',

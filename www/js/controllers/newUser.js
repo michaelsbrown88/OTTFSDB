@@ -1,5 +1,5 @@
 angular.module('newUserController', ['moodleData', 'localStorage'])
-  .controller('NewUserCtrl', function($scope, $state, $moodleData, $localStorage, $ionicPopup, $ionicViewService,$offlineData,$http){
+  .controller('NewUserCtrl', function($scope, $state, $moodleData,$ionicLoading, $localStorage, $ionicPopup, $ionicViewService,$offlineData,$http){
     $scope.countryCode=localStorage.getItem('user_country');
     $scope.$on('$ionicView.beforeEnter', function() {
       // authorize
@@ -7,6 +7,7 @@ angular.module('newUserController', ['moodleData', 'localStorage'])
     });
 
     $scope.$on('$ionicView.afterEnter', function(){
+		
       $scope.countries = $moodleData.country_list();
       $scope.years = $moodleData.year_list();
       $scope.user = {
@@ -16,7 +17,8 @@ angular.module('newUserController', ['moodleData', 'localStorage'])
         password: "Secur3$$",
         email: "",
         country: localStorage.getItem('user_country'),
-        gender: ""
+        gender: "",
+		smashdownbarriers:'0'
       };
         
     });
@@ -64,8 +66,13 @@ angular.module('newUserController', ['moodleData', 'localStorage'])
         $scope.showAlert('Username contains invalid characters.');
         return;
       }
-        
-
+	 
+	 /* if($scope.isChecked==true){alert($scope.isChecked);
+		  $scope.user.smashdownbarriers ='1';
+	  }else{alert($scope.isChecked+"eeeeeeee");
+		  $scope.user.smashdownbarriers ='0'; 
+		}*/
+	
       if($scope.user.password.length < 8){
         $scope.showAlert('Password must be at least 8 characters long.');
         return;
@@ -87,35 +94,39 @@ angular.module('newUserController', ['moodleData', 'localStorage'])
         return;
       }
         
-      // $moodleData.create_user($scope.user, function(res){
-      //   console.log(res);
-      //   if (res.data.errorcode){
-      //     $scope.showAlert(res.data.message);
-      //   } else {
-      //     // update the cache
-      //     var users = $localStorage.getObject("users");
-      //     if (users){
-      //       $moodleData.get_user(res.data[0].id, function(user){
-      //         if(!user.data.exception && user.data.users[0]){
-      //           users.push(user.data.users[0]);
-      //           $localStorage.setObject("users", users);
-      //         }
-      //       });
-      //     }
-      //     // return to userlist
-      //     $ionicViewService.nextViewOptions({
-      //       disableBack: true
-      //     });
-      //     $state.go('app.users');
-      //     return;
-      //   }
-      // });
+      /* $moodleData.create_user($scope.user, function(res){
+        console.log(res);
+        if (res.data.errorcode){
+          $scope.showAlert(res.data.message);
+        } else {
+          // update the cache
+          var users = $localStorage.getObject("users");
+          if (users){
+            $moodleData.get_user(res.data[0].id, function(user){
+             if(!user.data.exception && user.data.users[0]){
+                 users.push(user.data.users[0]);
+                $localStorage.setObject("users", users);
+             }
+            });
+          }
+          // return to userlist
+          $ionicViewService.nextViewOptions({
+            disableBack: true
+          });
+          $state.go('app.users');
+           return;
+        }
+      });*/
+	  
       var uss=[];
       var uuser=$scope.user;
       uuser.uid='--';
       uss.push(uuser);
-
-      $offlineData.add_gusers('--','--',uss,function (res) {
+	  $ionicLoading.show({
+        template: '<ion-spinner icon="spiral"></ion-spinner><br>Save...'
+      });
+      $offlineData.add_gusers('--','--',uss,function (res) { 
+	   $ionicLoading.hide();
         uuser.uid=res.data[0].id;
         uuser.status=0;
         uuser.fullname=uuser.firstname+' '+uuser.lastname;

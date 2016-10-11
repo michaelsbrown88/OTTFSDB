@@ -109,9 +109,11 @@ angular.module('groupController', ['offlineData', 'localStorage'])
     //$scope.ffusers = $localStorage.getItem('moodle_users');
       $scope.ggroups = $localStorage.getItem('moodle_groups');
       $scope.ccourses = $localStorage.getItem('moodle_courses');
+	  
       if($scope.ggroups.length===0){
-        $offlineData.get_activity('group',function(res){
+        $offlineData.get_activity('group',function(res){alert(JSON.stringify(res));
           $scope.ggroups=res.data;
+		 
           var courses=$scope.ggroups;
           // course-group-activity(user)
           angular.forEach(courses, function(v, k){

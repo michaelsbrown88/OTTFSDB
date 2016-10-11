@@ -1,5 +1,5 @@
 angular.module('editUserController', ['moodleData', 'localStorage'])
-  .controller('EditUserCtrl', function($scope, $state, $stateParams, $moodleData, $localStorage, $ionicLoading, $ionicPopup, $ionicViewService,$offlineData, $location, $rootScope){
+  .controller('EditUserCtrl', function($scope, $state, $stateParams, $moodleData, $localStorage, $ionicLoading, $ionicPopup, $ionicViewService,$offlineData, $location,$ionicLoading, $rootScope){
  
      $scope.census= function(){
         $rootScope.chk = true;
@@ -89,10 +89,19 @@ angular.module('editUserController', ['moodleData', 'localStorage'])
         $scope.showAlert('Country cannot be blank.');
         return;
       }
-
-      var uss=[];
-      uss.push($scope.user);
-      $offlineData.add_gusers('--','--',uss,function (res) {
+	  
+	 
+  
+       var uss=[];
+       uss.push($scope.user);
+	  $ionicLoading.show({
+        template: '<ion-spinner icon="spiral"></ion-spinner><br>Save...'
+      });
+	   
+      $offlineData.edit_gusers('--','--',uss,function (res) { 
+	   $ionicLoading.hide();
+	   
+	  if($scope.user.acts){
         var acts=$scope.user.acts;
         var fflag=true;
         angular.forEach(acts,function (ddd, iii, rrr) {
@@ -103,16 +112,40 @@ angular.module('editUserController', ['moodleData', 'localStorage'])
         }else{
           $scope.user.status=5;
         }
+	  }
         var users=$localStorage.getItem('moodle_users');
-        users.splice($scope.user.id, 1,$scope.user);
-        // store the updated users array
-        $localStorage.setObject('moodle_users', users);
+
+       // users.splice($scope.user.id, 1,$scope.user);
+		
+ 
+		   for (var i=0; i<users.length; i++) {
+			 if (users[i].uid == $scope.user.uid) {
+				 
+				 users.splice(i, 1);
+				 
+				/* users[i].firstname == $scope.user.firstname;
+				 users[i].lastname = $scope.user.lastname;
+				 users[i].username = $scope.user.username;
+				 users[i].password = $scope.user.password;
+				 users[i].email = $scope.user.email;
+				 users[i].country = $scope.user.country;
+				 users[i].gender = $scope.user.gender;
+				 users[i].smashdownbarriers = $scope.user.smashdownbarriers;*/
+				 
+				
+			 }
+		   }
+	  
+	    users.push($scope.user);
+		
+	    $localStorage.setObject('moodle_users', users);
+		
             $ionicViewService.nextViewOptions({
               disableBack: true
             });
             $state.go('app.users')
-
-      });
+			
+       });
 
       // $moodleData.update_user($scope.user, function(res){
       //   if (res.data === null){
@@ -149,6 +182,14 @@ angular.module('editUserController', ['moodleData', 'localStorage'])
       var users=$localStorage.getItem('moodle_users');
       $scope.user=users[$stateParams.id];
       $scope.user.birthyear=parseInt($scope.user.birthyear);
+	
+	/* if($scope.user.smashdownbarriers == '1'){
+		 $scope.isChecked =true; 
+		 $scope.$apply();
+	  }else{
+		  $scope.isChecked =false; 
+		  $scope.$apply();
+	  }*/
       // angular.forEach(users,function (uu, index, rr) {
       //   if(uu.id===$stateParams.id){
       //     $scope.users=uu;

@@ -100,7 +100,8 @@ angular.module('usersController', ['moodleData', 'localStorage'])
       // $scope.showLoader();
 
       $scope.users = $localStorage.getItem('moodle_users');
-        
+ 
+		
       if($scope.users.length===0){
         $offlineData.get_fusers(function(res){
           var users=res.data;
@@ -120,11 +121,12 @@ angular.module('usersController', ['moodleData', 'localStorage'])
       // $moodleData.get_users(0, 0, function(users){
       //   if(!users.data.exception){
       //     // $localStorage.setObject('users', users.data.users);
-      //     $scope.users = users.data.users;
+      //        $scope.users = users.data.users;
       //   }
-      //   $scope.hideLoader();
-      //   $scope.$broadcast('scroll.refreshComplete');
+      //     $scope.hideLoader();
+      //     $scope.$broadcast('scroll.refreshComplete');
       // });
+	  
     }
 
   });
