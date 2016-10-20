@@ -3,6 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular factories
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
+
 function MultiRangeDirective ($compile) {
   var directive = {
     restrict: 'E',
@@ -20,7 +21,7 @@ function MultiRangeDirective ($compile) {
 
   return directive;
 
-  ////////////////////
+
 
   function link ($scope, $element, $attrs) {
     var min, max, step, $inputMin = angular.element('<input type="range">'), $inputMax;
@@ -55,19 +56,19 @@ function MultiRangeDirective ($compile) {
     $scope.ngModelMax = $scope.ngModelMax || max;
 
     $scope.$watch('ngModelMin', function (newVal, oldVal) {
-      if (newVal > $scope.ngModelMax) {
-        $scope.ngModelMin = oldVal;
-      } else {
-        $scope.ngChangeMin();
-      }
+		  if (newVal > $scope.ngModelMax) {
+			$scope.ngModelMin = oldVal;
+		  } else {
+			$scope.ngChangeMin();
+		  }
     });
 
     $scope.$watch('ngModelMax', function (newVal, oldVal) {
-      if (newVal < $scope.ngModelMin) {
-        $scope.ngModelMax = oldVal;
-      } else {
-        $scope.ngChangeMax();
-      }
+		  if (newVal < $scope.ngModelMin) {
+			 $scope.ngModelMax = oldVal;
+		  } else {
+			 $scope.ngChangeMax();
+		  }
     });
   }
 }

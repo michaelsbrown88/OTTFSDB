@@ -109,9 +109,9 @@ angular.module('groupController', ['offlineData', 'localStorage'])
     //$scope.ffusers = $localStorage.getItem('moodle_users');
       $scope.ggroups = $localStorage.getItem('moodle_groups');
       $scope.ccourses = $localStorage.getItem('moodle_courses');
-	  
-      if($scope.ggroups.length===0){
-        $offlineData.get_activity('group',function(res){alert(JSON.stringify(res));
+		
+	  if($scope.ggroups.length===0){
+        $offlineData.get_activity('group',function(res){
           $scope.ggroups=res.data;
 		 
           var courses=$scope.ggroups;
@@ -136,10 +136,10 @@ angular.module('groupController', ['offlineData', 'localStorage'])
         $offlineData.get_fusers(function(res){
           var ffuser=res.data;
           angular.forEach(ffuser, function(v, k){
-            ffuser[k].status = 0;
-            ffuser[k].uid=ffuser[k].id;
-            ffuser[k].id = k;
-            ffuser[k].fullname=ffuser[k].firstname+' '+ffuser[k].lastname;                         
+              ffuser[k].status = 0;
+              ffuser[k].uid=ffuser[k].id;
+              ffuser[k].id = k;
+              ffuser[k].fullname = ffuser[k].firstname+' '+ffuser[k].lastname;                         
           });
           $scope.ffusers=ffuser;
           
@@ -224,35 +224,41 @@ angular.module('groupController', ['offlineData', 'localStorage'])
 
     $scope.add_group_confirm=function () {
       var index=-1;
-
+   
       angular.forEach($scope.ggroups,function (ccc, kk, arr) {
         if(ccc.course_id===$scope.modal.course)index=kk;
       });
       var course;
+	 
       if(index===-1){
         angular.forEach($scope.ccourses,function (cccc, kkkk, aaa) {
           if(cccc.course_id===$scope.modal.course)course=cccc;
         })
-      }
-      course=$scope.ggroups[index];
-      var groups=course.groups;
-      var id=groups.length;
-
+      }else{
+         course=$scope.ggroups[index];
+	  }
+	    var groups = [];
+		var id =1;
+		 if(course.groups){
+		    groups=course.groups;
+		    id=groups.length;
+		 }
+	  
+	  
+      $ionicLoading.show({ template: "Loading"  });
       $offlineData.add_group($scope.modal.groupname,function(re){
         var st=re.data;
         groups.push({id:id,group_name:$scope.modal.groupname,status:0,group_id:st[0].group_id,users:[]});
         // $scope.groups.push({id:id,group_name:$scope.modal.groupname,status:0,group_id:st[0].group_id});
         course.groups=groups;
-        if(index===-1)$scope.ggroups.push(course);
-        else $scope.ggroups.splice(index,1,course);
+        if(index===-1){$scope.ggroups.push(course);}
+        else{ $scope.ggroups.splice(index,1,course);}
         $localStorage.setObject('moodle_groups',$scope.ggroups);
-
-        $offlineData.course_add_group($scope.modal.course,st[0].group_id,'--',function (res) {
-          $ionicLoading.show({
-            noBackdrop: true,
-            template: "Success",
-            duration: 1000
-          });
+       // var newusername=$localStorage.get('ottfUsername');
+		
+        $offlineData.course_add_group($scope.modal.course,st[0].group_id,'--',function (res) { 
+		
+          $ionicLoading.hide();
           $scope.hide_modal();
         });
       });

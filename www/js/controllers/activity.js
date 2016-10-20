@@ -183,6 +183,7 @@ angular.module('activityControl', ['offlineData', 'localStorage'])
       }else{
         var index=$scope.user_trackers.indexOf($scope.selection.user);
         if(!$scope.selection.user.acts)$scope.selection.user.acts=[];
+		
         $offlineData.add_group_activity($scope.modal.course,'--',$scope.selection.user.uid,$scope.modal.date,$scope.modal.minute,function (res) {
           if(!$scope.selection.user.acts)$scope.selection.user.acts=[];
           var fullname='';
@@ -245,6 +246,7 @@ angular.module('activityControl', ['offlineData', 'localStorage'])
     };
 
     function fetchData(){
+		
     }
 
   });

@@ -42,6 +42,7 @@ angular.module('offlineData', [])
       $http(req).then(callback);
     },
      add_group:function(gname,callback){
+		
        var req={
          method:'POST',
          url:groupUrl,
@@ -51,6 +52,7 @@ angular.module('offlineData', [])
          data:{
            action:'add',
            add_group_name:gname
+		 
          }
 
        };
@@ -189,6 +191,8 @@ angular.module('offlineData', [])
         $http(req).then(callback);
       },
       course_add_group:function(course_id,group_id,user_id,callback){
+		 var newusername=$localStorage.get('ottfUsername');
+		
         var req={
           method:'POST',
           url:courseUrl,
@@ -200,7 +204,8 @@ angular.module('offlineData', [])
             action:'addcourse',
             course_id:course_id,
             group_id:group_id,
-            user_id:user_id
+            user_id:user_id,
+			username:newusername
           }
         };
         $http(req).then(callback);
@@ -222,6 +227,8 @@ angular.module('offlineData', [])
         $http(req).then(callback);
       },
       get_activity:function (type,callback) {
+		     var newusername=$localStorage.get('ottfUsername');
+		 
         var req={
           method:'POST',
           url:courseUrl,
@@ -231,7 +238,8 @@ angular.module('offlineData', [])
           },
           data:{
             action:'readcoursegroup',
-            type:type
+            type:type,
+			username:newusername
           }
         };
         $http(req).then(callback);
@@ -253,6 +261,7 @@ angular.module('offlineData', [])
         $http(req).then(callback);
       },
       add_group_activity:function (course_id,group_id,user_id,date,minute,callback) {
+		 
         var req={
           method:'POST',
           url:courseUrl,

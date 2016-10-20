@@ -90,12 +90,12 @@ angular.module('uploadController', ['moodleData', 'localStorage'])
         if(del_users.length>0){
           $offlineData.del_gusers(group.group_id,del_users,function(re){
             $offlineData.add_gusers(group.group_id,group.group_name,group.users,function(re){
-              if(re.data==='OK') fetchEditData(group);
+              if(re.status===200) fetchEditData(group);
             });
           });
         }else{
           $offlineData.add_gusers(group.group_id,group.group_name,group.users,function(re){
-            if(re.data==='OK') fetchEditData(group);
+            if(re.status===200) fetchEditData(group);
           });
         }
       }
@@ -132,7 +132,7 @@ angular.module('uploadController', ['moodleData', 'localStorage'])
       $scope.hideLoader();
     };
 
-    function fetchEditData(group){
+    function fetchEditData(group){ 
       $offlineData.get_gusers(group.group_id,function(res){
         if(res.data.length===0)return;
 
@@ -149,10 +149,15 @@ angular.module('uploadController', ['moodleData', 'localStorage'])
 
     $scope.newGroup = function(group){
       var course=$scope.selection.course;
-      var index=$scope.groups.indexOf(course);
-      var groups=course.groups;
-      var inx=groups.indexOf($scope.selection.group);
-
+	   var index=0;
+	  for(var c=0; c<$scope.groups.length; c++){
+		if($scope.groups[c].course_id==course.course_id){
+			index = c;
+		  }
+	  }
+	  var groups=course.groups;
+      var inx=groups.indexOf(group);
+     
       var acts=group.acts;
       var fflag=true;
       angular.forEach(acts,function (ddd, iii, rrr) {
@@ -168,14 +173,16 @@ angular.module('uploadController', ['moodleData', 'localStorage'])
       }
       groups.splice(inx, 1,group);
       course.groups=groups;
+	  course.status=0;
       $scope.groups.splice(index,1,course);
-      // store the updated users array
+     
       $localStorage.setObject('moodle_groups', $scope.groups);
+	  $scope.hideLoader();
     };
 
     function checkExistingUsers(callback){
-      $scope.fusers = $localStorage.getItem('moodle_users');
-      $scope.groups = $localStorage.getItem('moodle_groups');
+      $scope.fusers  =  $localStorage.getItem('moodle_users');
+      $scope.groups  =  $localStorage.getItem('moodle_groups');
       $scope.courses = $localStorage.getItem('moodle_courses');
       var user_length=0;
       var group_length=0;
@@ -218,15 +225,32 @@ angular.module('uploadController', ['moodleData', 'localStorage'])
     
 
     $scope.removeGroup = function(group){
+	  $scope.showLoader();
       var course=$scope.selection.course;
-      var index=$scope.courses.indexOf(course);
+	  $scope.courses = $localStorage.getItem('moodle_groups');
+	  
+	   var index=0;
+	  for(var c=0; c<$scope.courses.length; c++){
+		if($scope.courses[c].course_id==course.course_id){
+			index = c;
+		  }
+	  }
+	  
       var groups=course.groups;
       var inx=groups.indexOf(group);
+	
       groups.splice(inx, 1);
       course.groups=groups;
-      $scope.courses.splice(index,1,course);
+	  course.status=0;
+      $scope.courses.splice(index,1);
+	  $scope.courses.push(course);
+	 
       // store the updated users array
-      $localStorage.setObject('moodle_groups', groups);
+       $localStorage.setObject('moodle_groups', $scope.courses);
+	   $scope.groups = $scope.courses;
+	   $scope.$apply();
+	   $scope.hideLoader();
+	 
     };
 
     //upload group activity
@@ -341,7 +365,7 @@ angular.module('uploadController', ['moodleData', 'localStorage'])
         // });
         var uss=[];
         uss.push(user);
-        $offlineData.add_gusers('--','--',uss,function (res) {
+        $offlineData.edit_gusers('--','--',uss,function (res) {
           // user.uid=res.data[0].id;
           $scope.newUser(user);
           // fetchData();
@@ -501,7 +525,7 @@ angular.module('uploadController', ['moodleData', 'localStorage'])
 
     $scope.showLoader = function() {
       $ionicLoading.show({
-        template: '<ion-spinner icon="spiral"></ion-spinner><br>Working...'
+        template: '<ion-spinner icon="spiral"></ion-spinner><br>Uploading...'
       });
     };
 
@@ -520,9 +544,7 @@ angular.module('uploadController', ['moodleData', 'localStorage'])
 
       var courses=$scope.groups;
       // course-group-activity(user)
-      
-    
-
+  
       angular.forEach($scope.fusers, function(tra, i){
         if(tra.status!==0){
             $scope.uploadUser(tra);
@@ -566,6 +588,7 @@ angular.module('uploadController', ['moodleData', 'localStorage'])
       //edit group
       if(group.status == 2){
         // set id to existing user's id for update
+		$scope.selection.course =course;
         var uuuu=group.users;
         var del_users=[];
         angular.forEach(uuuu,function (fff, iii, rrr) {
@@ -578,20 +601,22 @@ angular.module('uploadController', ['moodleData', 'localStorage'])
         if(del_users.length>0){
           $offlineData.del_gusers(group.group_id,del_users,function(re){
             $offlineData.add_gusers(group.group_id,group.group_name,group.users,function(re){
-              if(re.data==='OK') fetchEditData(group);
+              if(re.status===200) fetchEditData(group);
             });
           });
         }else{
           $offlineData.add_gusers(group.group_id,group.group_name,group.users,function(re){
-            if(re.data==='OK') fetchEditData(group);
+            if(re.status===200) fetchEditData(group);
           });
         }
       }
       // new group
       if(group.status == 1){
+		 
         $offlineData.add_group(group.group_name,function(re){
           group.gid=re.data[0].group_id;
           group.group_id=re.data[0].group_id;
+		    
           $offlineData.course_add_group(course.course_id,group.gid,'--',function (res) {
             $scope.newAllGroup(course,group);
           })
@@ -601,6 +626,7 @@ angular.module('uploadController', ['moodleData', 'localStorage'])
 
       //delete group
       if(group.status == 3){
+		  $scope.selection.course = course;
             $offlineData.delete_group(group.group_id,function(re){
               $scope.removeGroup(group);
               // fetchData();
@@ -609,12 +635,21 @@ angular.module('uploadController', ['moodleData', 'localStorage'])
     }; 
     
     $scope.newAllGroup = function(course,group){
-      var index=$scope.groups.indexOf(course);
+		 $scope.groups  =  $localStorage.getItem('moodle_groups');
+       var index=0;
+	  for(var c=0; c<$scope.groups.length; c++){
+		if($scope.groups[c].course_id==course.course_id){
+			index = c;
+		  }
+	  }
+	 
+
       var groups=course.groups;
       var inx=groups.indexOf(group);
-
+      
+	  var fflag=true;
       var acts=group.acts;
-      var fflag=true;
+      
       angular.forEach(acts,function (ddd, iii, rrr) {
         if(ddd.status!==0){
           fflag=false;
@@ -627,10 +662,15 @@ angular.module('uploadController', ['moodleData', 'localStorage'])
         group.status=5;
       }
       groups.splice(inx, 1,group);
+	
       course.groups=groups;
       $scope.groups.splice(index,1,course);
-      // store the updated users array
+      
       $localStorage.setObject('moodle_groups', $scope.groups);
+	   $scope.groups
+	  
+	   $scope.$apply();
+	   $scope.hideLoader();
     };
     
   });
