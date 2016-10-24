@@ -62,20 +62,21 @@ angular.module('userProfileController', ['localStorage', 'moodleData'])
       myImage.src = imageURI;
 
       var options = {
-             fileKey: "file",
-             fileName: filename,
-             chunkedMode: false,
-             mimeType: "image/jpg",
+             fileKey : "file",
+             fileName : filename,
+             chunkedMode : false,
+             mimeType : "image/jpg",
              params : {'user':$scope.user.id},
 			 headers :{
-                           Connection: "close"
-                         }
+                         Connection: "close"
+                      }
          };
-      console.log(imageURI);
+     // console.log(imageURI);
+	
         
       $cordovaFileTransfer.upload("https://learning.ittfoceania.com/webservice/tg_pic_upload.php",imageURI , options,true)
           .then(function(result) {
-           //   alert(JSON.stringify(result));
+            //  alert(JSON.stringify(result));
           }, function(err) {
            //   alert(JSON.stringify(err));
           }, function (progress) {
@@ -190,11 +191,12 @@ angular.module('userProfileController', ['localStorage', 'moodleData'])
         console.log($scope.user.courses);
 
       } else {
-   
-        // fetch the logged in user
+      // fetch the logged in user
         $moodleData.get_user_by_username($localStorage.get('ottfUsername'), function(res){
           if(res.data.users && res.data.users.length > 0){
             $scope.user = res.data.users[0];
+			$scope.$apply();
+			
             //console.log($localStorage.getItem("country"));
             if(localStorage.getItem("user_country")==undefined){
                 localStorage.setItem("user_country",$scope.user.country);

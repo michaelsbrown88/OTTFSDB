@@ -261,7 +261,7 @@ angular.module('offlineData', [])
         $http(req).then(callback);
       },
       add_group_activity:function (course_id,group_id,user_id,date,minute,callback) {
-		 
+		   var newusername=$localStorage.get('ottfUsername');
         var req={
           method:'POST',
           url:courseUrl,
@@ -275,7 +275,8 @@ angular.module('offlineData', [])
             group_id:group_id,
             user_id:user_id,
             date:date,
-            minutes:minute
+            minutes:minute,
+			username:newusername
           }
         };
         $http(req).then(callback);

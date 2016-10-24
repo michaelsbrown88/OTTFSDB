@@ -9,7 +9,7 @@
         <input type="text" placeholder="Search" ng-model="searchString">
       </label>
 
-      <label class="item item-input item-select">
+      <label class="item item-input item-select" style="width:80%;float:left;">
         <div class="input-label">
           Country
         </div>
@@ -20,6 +20,9 @@
           </option>
         </select>
       </label>
+       <button ng-disabled="haveNoRights()"  class="button " style="float:right; width:20%; background-color:#3fa9f3; color:#fff;">
+              Go
+        </button>
     </div>
     <ion-list class="list">
       <div class="row"  ng-repeat="user in $parent.filteredUsers = (ffusers | filter: {fullname: searchString, country: countryCode})">

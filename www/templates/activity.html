@@ -43,7 +43,7 @@
           <ion-item style="padding:8px;" class="item" ng-click="add_acts(css,gp)" ng-class="{'active':isActive(gp)}" >
             <h2>Group : {{gp.group_name}} </h2>
           </ion-item>
-          <ion-item class="item" style="background: #efefef;" ng-repeat="act in gp.acts | filter:myFilter" ng-show="gp===selection.group" style="background-color: #4d4d4d;color:#fff;">
+          <ion-item class="item"  ng-repeat="act in gp.acts | filter:myFilter" ng-show="gp===selection.group" style="background-color: #4d4d4d;color:#fff;">
             <div class="row">
               <div class="col col-40">
                 {{act.date | date:'yyyy-MM-dd'}}

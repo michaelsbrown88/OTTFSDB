@@ -17,7 +17,7 @@ angular.module('authController', ['localStorage', 'moodleData'])
 
     $scope.offlineMode = function(){
       if($scope.user.username){
-        console.log('username='+$scope.user.username);
+      //  console.log('username='+$scope.user.username);
         $state.go('offline.group');
       }else{
         $ionicPopup.alert({

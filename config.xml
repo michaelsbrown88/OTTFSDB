@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.ionicframework.thinkgenius" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>ThinkGenius</name>
-  <description>&#xD;
-        ThinkGenius App&#xD;
+  <description>&#xD;&#xD;
+        ThinkGenius App&#xD;&#xD;
     </description>
-  <author email="tim@codebigger.com" href="http://codebigger.com/">&#xD;
-      Tim OBrien&#xD;
+  <author email="tim@codebigger.com" href="http://codebigger.com/">&#xD;&#xD;
+      Tim OBrien&#xD;&#xD;
     </author>
   <content src="index.html"/>
   <access origin="*"/>
@@ -19,6 +19,9 @@
   <preference name="SplashScreenDelay" value="3000"/>
   <feature name="StatusBar">
     <param name="ios-package" onload="true" value="CDVStatusBar"/>
+  </feature>
+  <feature name="Keyboard">
+    <param name="ios-package" value="IonicKeyboard" onload="true"/>
   </feature>
   <platform name="android">
     <icon src="resources\android\icon\drawable-ldpi-icon.png" density="ldpi"/>

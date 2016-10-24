@@ -4,7 +4,7 @@
       <i class="icon ion-android-add-circle"></i> New User
     </button>
   </ion-nav-buttons>
-  <ion-content  overflow-scroll='true'>
+  <ion-content  overflow-scroll="true"  >
 
     <ion-refresher
       pulling-text="Pull to refresh..."
@@ -17,7 +17,7 @@
         <input type="text" placeholder="Search" ng-model="searchString" ng-model-options="{debounce: 1000}">
       </label>
 
-      <label class="item item-input item-select">
+      <label class="item item-input item-select" style="width:80%;float:left;">
         <div class="input-label">
           Country
         </div>
@@ -28,6 +28,10 @@
           </option>
         </select>
       </label>
+     
+        <button ng-disabled="haveNoRights()"  class="button " style="float:right; width:20%; background-color:#3fa9f3; color:#fff;">
+              Go
+        </button>
 
     </div>
 

@@ -32,7 +32,11 @@
       "id": "cordova-plugin-image-picker"
     },
     "cordova-plugin-file-transfer",
-    "cordova-plugin-file"
+    "cordova-plugin-file",
+    {
+      "locator": "https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git",
+      "id": "cordova-plugin-x-toast"
+    }
   ],
   "cordovaPlatforms": [
     "android",

@@ -185,18 +185,32 @@ angular.module('activityControl', ['offlineData', 'localStorage'])
         if(!$scope.selection.user.acts)$scope.selection.user.acts=[];
 		
         $offlineData.add_group_activity($scope.modal.course,'--',$scope.selection.user.uid,$scope.modal.date,$scope.modal.minute,function (res) {
-          if(!$scope.selection.user.acts)$scope.selection.user.acts=[];
-          var fullname='';
-          angular.forEach($scope.course,function (dd, ind, aa) {
-            if(dd.course_id===$scope.modal.course){
-              fullname=dd.fullname;
-            }
-          });
-          var att={id:res.data,date:$scope.modal.date,minutes:$scope.modal.minute,course_id:$scope.modal.course,course_name:fullname,status:0};
-          $scope.selection.user.acts.push(att);
-          $scope.user_trackers.splice(index,1,$scope.selection.user);
-          $localStorage.setObject('user_trackers',$scope.user_trackers);
-          $scope.hide_modal();
+		 
+		  if(res.data!="Fail"){
+			  if(!$scope.selection.user.acts)$scope.selection.user.acts=[];
+			  var fullname='';
+			  angular.forEach($scope.course,function (dd, ind, aa) {
+				if(dd.course_id===$scope.modal.course){
+				  fullname=dd.fullname;
+				}
+			  });
+		 var att={id:res.data,date:$scope.modal.date,minutes:$scope.modal.minute,course_id:$scope.modal.course,course_name:fullname,status:0};
+			  $scope.selection.user.acts.push(att);
+			  $scope.user_trackers.splice(index,1,$scope.selection.user);
+			  $localStorage.setObject('user_trackers',$scope.user_trackers);
+			  $scope.hide_modal();
+		  }else{
+			  
+			   window.plugins.toast.showWithOptions(
+					{
+					  message: "No Permission",
+					  duration: "long", // which is 2000 ms. "long" is 4000. Or specify the nr of ms yourself.
+					  position: "top",
+					  addPixelsY: 40  // added a negative value to move it up a bit (default 0)
+					});
+				  $scope.hide_modal();	
+			   }
+		  
         });
       }
     };

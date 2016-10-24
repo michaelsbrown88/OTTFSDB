@@ -109,8 +109,8 @@ angular.module('groupController', ['offlineData', 'localStorage'])
     //$scope.ffusers = $localStorage.getItem('moodle_users');
       $scope.ggroups = $localStorage.getItem('moodle_groups');
       $scope.ccourses = $localStorage.getItem('moodle_courses');
-		
-	  if($scope.ggroups.length===0){
+	  
+	  if($scope.ggroups.length===0 || $scope.ggroups == "status:No data" ){
         $offlineData.get_activity('group',function(res){
           $scope.ggroups=res.data;
 		 
@@ -131,7 +131,7 @@ angular.module('groupController', ['offlineData', 'localStorage'])
           
           $localStorage.setObject('moodle_groups',courses);
         });
-      }
+     }
       if($scope.ffusers.length===0){
         $offlineData.get_fusers(function(res){
           var ffuser=res.data;

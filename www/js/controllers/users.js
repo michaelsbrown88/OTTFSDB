@@ -23,7 +23,7 @@ angular.module('usersController', ['moodleData', 'localStorage'])
       $scope.user_role=localStorage.getItem('moodle_role');
      $scope.token=localStorage.getItem('ottfToken'); 
         
-        
+       
 
     });
     
@@ -45,7 +45,7 @@ angular.module('usersController', ['moodleData', 'localStorage'])
     
     $scope.checkEditRights = function(roleid,country){
         if(roleid == undefined || roleid>$scope.user_role){
-            console.log($scope.countryCode,country);
+          //  console.log($scope.countryCode,country);
             if($scope.countryCode==country){
                 return true;
                 

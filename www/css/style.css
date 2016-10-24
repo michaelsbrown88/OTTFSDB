@@ -98,3 +98,62 @@ div.active {
     padding-top:20px;
 }
 
+
+@mixin flex($fg: 1, $fs: null, $fb: null) {
+  -webkit-box-flex: $fg;
+  -webkit-flex: $fg $fs $fb;
+  -moz-box-flex: $fg;
+  -moz-flex: $fg $fs $fb;
+  -ms-flex: $fg $fs $fb;
+  flex: $fg $fs $fb;
+}
+
+$range-default-track-bg:          #ccc !default;
+
+// Multi-range css
+ui-multi-range {
+    @include flex(1);
+    position: relative;
+    height: 50px;
+    input[type=range] {
+        position: absolute;
+        display: block;
+        width: 100%;
+        margin: 0;
+        padding: 0 2px;
+        overflow: hidden;
+        border: 0;
+        border-radius: 1px;
+        outline: none;
+        pointer-events: none;
+        
+        &:active,
+        &:focus {
+            outline: none;
+        }
+        
+        &::-webkit-slider-thumb {
+            position: relative;
+            cursor: pointer;
+            pointer-events: all;
+            &::before {
+                content: ' ';
+                display: block;
+                position: absolute;
+                top: 13px;
+                left: 100%;
+                width: 2000px;
+                height: 2px;
+            }
+        }
+
+        &:nth-child(2) {
+            background: none;
+
+            &::-webkit-slider-thumb::before {
+                background-color: $range-default-track-bg;
+            }
+        }
+    }
+}
+
